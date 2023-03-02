@@ -1,6 +1,11 @@
 import SmallFilmCard from '../../components/small-film-card/SmallFilmCard';
+type MainProps = {
+  filmName: string;
+  yearFilm: number;
+  filmGenre: string;
+}
 
-function Main(): JSX.Element {
+function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -10,9 +15,11 @@ function Main(): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header film-card__head">
           <div className="logo">
-            <a className="logo__link"> <span className="logo__letter logo__letter--1">W</span>
+            <a className="logo__link">
+              <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span> </a>
+              <span className="logo__letter logo__letter--3">W</span>
+            </a>
           </div>
           <ul className="user-block">
             <li className="user-block__item">
@@ -31,9 +38,10 @@ function Main(): JSX.Element {
               <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{filmName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span> <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{filmGenre}</span>
+                <span className="film-card__year">{yearFilm}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -99,17 +107,19 @@ function Main(): JSX.Element {
         </section>
         <footer className="page-footer">
           <div className="logo">
-            <a className="logo__link logo__link--light"> <span className="logo__letter logo__letter--1">W</span>
+            <a className="logo__link logo__link--light">
+              <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span> </a>
+              <span className="logo__letter logo__letter--3">W</span>
+            </a>
           </div>
           <div className="copyright">
-            <p>© 2019 - 2023 What to watch Ltd.</p>
+            <p>© 2019 - {new Date().getFullYear()} What to watch Ltd.</p>
           </div>
         </footer>
       </div>
     </>
-  )
+  );
 }
 
-export default Main
+export default Main;
