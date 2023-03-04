@@ -6,6 +6,6 @@ export const Path = {
     Review: 'review'
   },
   PlayerPage: 'player/:id',
-  MyListPage: 'my-list',
+  MyListPage: 'mylist',
   PageNotFound: '*'
 } as const;
