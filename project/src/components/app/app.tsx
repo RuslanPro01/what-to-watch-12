@@ -1,4 +1,4 @@
-import Main from '../../pages/main/Main';
+import Main from '../../pages/main/main';
 
 type AppProps = {
   filmName: string;

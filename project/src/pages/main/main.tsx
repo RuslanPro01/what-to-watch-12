@@ -1,4 +1,4 @@
-import SmallFilmCard from '../../components/small-film-card/SmallFilmCard';
+import SmallFilmCard from '../../components/small-film-card/small-film-card';
 type MainProps = {
   filmName: string;
   yearFilm: number;
