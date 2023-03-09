@@ -1,11 +1,12 @@
-import SmallFilmCard from '../../components/small-film-card/small-film-card';
+import {Films} from '../../mock/films';
 type MainProps = {
   filmName: string;
   yearFilm: number;
   filmGenre: string;
+  films: Films;
 }
 
-function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
+function Main({filmName, yearFilm, filmGenre, films}: MainProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -97,9 +98,7 @@ function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
             </li>
           </ul>
           <div className="catalog__films-list">
-            {
-              Array.from({length: 20}, ((_, index: number) => <SmallFilmCard key={index}/>))
-            }
+            <FilmCards />
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

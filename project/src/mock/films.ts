@@ -1,3 +1,5 @@
+import exp from 'constants';
+
 type Film = {
   'name': string;
   'posterImage': string;
@@ -18,7 +20,7 @@ type Film = {
   'previewVideoLink': string;
 }
 
-type Films = readonly Film[]
+export type Films = readonly Film[]
 
 /**
  * Моковые данные фильмов

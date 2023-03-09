@@ -9,25 +9,27 @@ import {Path} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import {AuthorizationStatus} from '../private-route/const';
 import MyList from '../../pages/my-list/my-list';
+import {Films} from '../../mock/films';
 
-const {MainPage, Login, Films, PlayerPage, PageNotFound, MyListPage} = Path;
+const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 
 type AppProps = {
   filmName: string;
   yearFilm: number;
   filmGenre: string;
+  films: Films;
 }
 
-function App({filmName, yearFilm, filmGenre}: AppProps): JSX.Element {
+function App({filmName, yearFilm, filmGenre, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={MainPage}>
-          <Route index element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre}/>}/>
+          <Route index element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}/>
           <Route path={Login} element={<SignIn/>}/>
-          <Route path={Films.MainPage}>
+          <Route path={FilmsPages.MainPage}>
             <Route index element={<MoviePage/>}/>
-            <Route path={Films.Review} element={<AddReview/>}/>
+            <Route path={FilmsPages.Review} element={<AddReview/>}/>
           </Route>
           <Route path={PlayerPage} element={<Player/>}/>
           <Route path={MyListPage} element={
