@@ -1,6 +1,10 @@
 import {Comments} from './reviews';
 type CallBackCommentFunction = (count: number) => Comments;
 
+/**
+ * Принимает массив комментариев, возвращает callback функцию которая может генерировать новый массив комментариев на основе первоначального
+ * @param comments комментарии
+ */
 export function getRandomComments(comments: Comments): CallBackCommentFunction {
   return function (count = 5) {
     const result: Comments = [];

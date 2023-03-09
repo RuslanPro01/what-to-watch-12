@@ -20,6 +20,9 @@ type Film = {
 
 type Films = readonly Film[]
 
+/**
+ * Моковые данные фильмов
+ */
 export const films: Films = [
   {
     'name': 'Legend',
