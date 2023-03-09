@@ -1,4 +1,6 @@
 import {Films} from '../../mock/films';
+import FilmCards from '../../components/film-cards/film-cards';
+
 type MainProps = {
   filmName: string;
   yearFilm: number;
@@ -98,7 +100,7 @@ function Main({filmName, yearFilm, filmGenre, films}: MainProps): JSX.Element {
             </li>
           </ul>
           <div className="catalog__films-list">
-            <FilmCards />
+            <FilmCards films={films}/>
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

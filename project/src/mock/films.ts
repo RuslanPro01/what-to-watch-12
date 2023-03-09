@@ -1,5 +1,3 @@
-import exp from 'constants';
-
 type Film = {
   'name': string;
   'posterImage': string;
