@@ -33,8 +33,8 @@ function App({filmName, yearFilm, filmGenre, films}: AppProps): JSX.Element {
           </Route>
           <Route path={PlayerPage} element={<Player/>}/>
           <Route path={MyListPage} element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <MyList/>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <MyList films={films}/>
             </PrivateRoute>
           }
           />

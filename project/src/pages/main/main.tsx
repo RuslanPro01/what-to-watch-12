@@ -100,7 +100,7 @@ function Main({filmName, yearFilm, filmGenre, films}: MainProps): JSX.Element {
             </li>
           </ul>
           <div className="catalog__films-list">
-            <FilmCards films={films}/>
+            <FilmCards films={films} onlyFavorite={false}/>
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

@@ -1,12 +1,25 @@
 import {Films} from '../../mock/films';
 import SmallFilmCard from './small-film-card';
 
-function FilmCards({films}: {films: Films}): JSX.Element {
+type PropsFilmCard = {
+  films: Films;
+  onlyFavorite: boolean;
+}
+
+function FilmCards({films, onlyFavorite}: PropsFilmCard): JSX.Element {
+  if (onlyFavorite) {
+    return (
+      <>
+        {
+          films.map(({name, previewImage, id, isFavorite}) => isFavorite ? <SmallFilmCard name={name} previewImage={previewImage} id={id} key={id}/> : null)
+        }
+      </>
+    );
+  }
   return (
     <>
       {
-        films.map(({name, previewImage, id}) =>
-          <SmallFilmCard name={name} previewImage={previewImage} id={id} key={id}/>)
+        films.map(({name, previewImage, id}) => <SmallFilmCard name={name} previewImage={previewImage} id={id} key={id}/>)
       }
     </>
   );

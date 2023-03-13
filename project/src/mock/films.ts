@@ -204,7 +204,7 @@ export const films: Films = [
     'genre': 'Fantasy',
     'released': 2018,
     'id': 8,
-    'isFavorite': false,
+    'isFavorite': true,
     'videoLink': 'https://12.react.pages.academy/static/film/video/bubbles.mp4',
     'previewVideoLink': 'https://12.react.pages.academy/static/film/video/dog.mp4'
   },
