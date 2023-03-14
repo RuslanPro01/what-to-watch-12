@@ -1,5 +1,7 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer';
+import {Link} from 'react-router-dom';
+import {Path} from '../../const';
 
 function MoviePage(): JSX.Element {
   return (
@@ -32,7 +34,7 @@ function MoviePage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to={Path.FilmsPages.Review} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
