@@ -1,15 +1,17 @@
 import './page-404-style.css';
+import {Link} from 'react-router-dom';
+import {Path} from '../../const';
 
 function Page404(): JSX.Element {
   return (
     <div className="error-page">
       <header className="page-header user-page__head">
         <div className="logo">
-          <a href="/" className="logo__link">
+          <Link to={Path.MainPage} className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          </Link>
         </div>
       </header>
       <section className="error-container">
