@@ -1,4 +1,11 @@
+import Logo from '../../components/header/logo';
+import UserBlock from '../../components/header/user-block';
+import {Link} from 'react-router-dom';
+import {Path} from '../../const';
+import {useParams} from 'react-router-dom';
+
 function AddReview(): JSX.Element {
+  const {id} = useParams<{ id: string }>();
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -7,36 +14,27 @@ function AddReview(): JSX.Element {
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo/>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <Link to={`/${Path.FilmsPages.MainPage.replace(':id', id as string)}`}
+                  className="breadcrumbs__link"
+                >
+                  The Grand Budapest Hotel
+                </Link>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
+                <Link className="breadcrumbs__link" to={''}>Add review</Link>
               </li>
             </ul>
           </nav>
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <UserBlock/>
         </header>
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218"
+            height="327"
+          />
         </div>
       </div>
       <div className="add-review">
@@ -66,7 +64,10 @@ function AddReview(): JSX.Element {
             </div>
           </div>
           <div className="add-review__text">
-            <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+            <textarea className="add-review__textarea" name="review-text" id="review-text"
+              placeholder="Review text"
+            >
+            </textarea>
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit">Post</button>
             </div>

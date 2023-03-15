@@ -1,9 +1,11 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../const';
 
 function MoviePage(): JSX.Element {
+  const {id} = useParams<{ id: string }>();
+  const navigate = useNavigate();
   return (
     <>
       <section className="film-card film-card--full">
@@ -21,7 +23,13 @@ function MoviePage(): JSX.Element {
                 <span className="film-card__year">2014</span>
               </p>
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button
+                  className="btn btn--play film-card__button"
+                  type="button"
+                  onClick={() => {
+                    navigate(`/${Path.PlayerPage.replace(':id', id as string)}`);
+                  }}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
