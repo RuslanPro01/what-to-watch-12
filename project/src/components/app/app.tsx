@@ -5,7 +5,7 @@ import Page404 from '../../pages/page-404/page-404';
 import MoviePage from '../../pages/movie-page/movie-page';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
-import {Path} from '../../const';
+import {Path} from '../../common-const';
 import PrivateRoute from '../private-route/private-route';
 import {AuthorizationStatus} from '../private-route/const';
 import MyList from '../../pages/my-list/my-list';

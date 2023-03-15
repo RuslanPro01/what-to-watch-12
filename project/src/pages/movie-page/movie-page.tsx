@@ -1,7 +1,7 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer';
 import {Link, useNavigate, useParams} from 'react-router-dom';
-import {Path} from '../../const';
+import {Path} from '../../common-const';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();

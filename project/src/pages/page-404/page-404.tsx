@@ -1,6 +1,6 @@
 import './page-404-style.css';
 import {Link} from 'react-router-dom';
-import {Path} from '../../const';
+import {Path} from '../../common-const';
 
 function Page404(): JSX.Element {
   return (

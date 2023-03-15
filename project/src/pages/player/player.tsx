@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from 'react-router-dom';
-import {Path} from '../../const';
+import {Path} from '../../common-const';
 
 function Player(): JSX.Element {
   const navigate = useNavigate();
