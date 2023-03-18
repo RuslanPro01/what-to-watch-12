@@ -29,9 +29,9 @@ function Page404(): JSX.Element {
           If you still want to find this page, we suggest checking your space coordinates or trying to catch it with
           teleportation. Good luck!
         </p>
-        <a href="/" className="error-container__link">
+        <Link to={Path.MainPage} className="error-container__link">
           GO TO THE MAIN PAGE
-        </a>
+        </Link>
       </section>
     </div>
   );

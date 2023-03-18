@@ -11,7 +11,7 @@ function Player(): JSX.Element {
         type="button"
         className="player__exit"
         onClick={() => {
-          navigate(`/${Path.FilmsPages.MainPage.replace(':id', id as string)}`);
+          navigate(`${Path.FilmsPages.MainPage.replace(':id', id as string)}`);
         }}
       >
         Exit
