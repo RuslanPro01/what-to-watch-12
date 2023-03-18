@@ -1,11 +1,25 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
+import FilmNav from './film-nav';
+import { useEffect } from 'react';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  const location = useLocation();
+  useEffect(() => {
+    const isOverviewActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Overview);
+    const isDetailsActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Details);
+    const isReviewsActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Reviews);
+
+    if (!isOverviewActive && !isDetailsActive && !isReviewsActive) {
+      navigate(Path.FilmsPages.Tabs.Overview);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <>
       <section className="film-card film-card--full">
@@ -24,10 +38,8 @@ function MoviePage(): JSX.Element {
               </p>
               <div className="film-card__buttons">
                 <button
-                  className="btn btn--play film-card__button"
-                  type="button"
-                  onClick={() => {
-                    navigate(`/${Path.PlayerPage.replace(':id', id as string)}`);
+                  className="btn btn--play film-card__button" type="button" onClick={() => {
+                    navigate(`${Path.PlayerPage.replace(':id', id as string)}`);
                   }}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
@@ -53,40 +65,8 @@ function MoviePage(): JSX.Element {
               <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
             </div>
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-              <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-              <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge
-                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s friend and protege.
-                </p>
-                <p>Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying
-                  the sexual needs of the many elderly women who stay there. When one of Gustave&apos;s lovers dies
-                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her
-                  murder.
-                </p>
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
-                <p className="film-card__starring">
-                  <strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong>
-                </p>
-              </div>
+              <FilmNav/>
+              <Outlet/>
             </div>
           </div>
         </div>
