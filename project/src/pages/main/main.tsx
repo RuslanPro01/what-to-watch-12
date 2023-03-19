@@ -83,9 +83,7 @@ function Main({filmName, yearFilm, filmGenre, films}: MainProps): JSX.Element {
               <a href="#" className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            <FilmCards films={films} onlyFavorite={false}/>
-          </div>
+          <FilmCards films={films}/>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>

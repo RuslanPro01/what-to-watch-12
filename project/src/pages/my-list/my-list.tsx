@@ -9,18 +9,17 @@ type PropsMyList = {
 }
 
 function MyList({films}: PropsMyList): JSX.Element {
+  const favoriteFilms = [...films].filter(({isFavorite}) => isFavorite === true);
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
         <Logo/>
-        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
+        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{favoriteFilms.length}</span></h1>
         <UserBlock/>
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <div className="catalog__films-list">
-          <FilmCards films={films} onlyFavorite/>
-        </div>
+        <FilmCards films={favoriteFilms}/>
       </section>
       <Footer/>
     </div>

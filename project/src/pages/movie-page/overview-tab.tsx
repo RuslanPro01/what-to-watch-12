@@ -1,4 +1,4 @@
-function Overview(): JSX.Element {
+function OverviewTab(): JSX.Element {
   return (
     <>
       <div className="film-rating">
@@ -25,4 +25,4 @@ function Overview(): JSX.Element {
   );
 }
 
-export default Overview;
+export default OverviewTab;

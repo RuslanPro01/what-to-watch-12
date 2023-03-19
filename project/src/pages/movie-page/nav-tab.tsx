@@ -1,7 +1,7 @@
 import {Navigate, useParams, Link, useLocation} from 'react-router-dom';
 import {Path} from '../../common-const';
 
-function FilmNav(): JSX.Element {
+function NavTab(): JSX.Element {
   const {id} = useParams<{id: string}>();
   const location = useLocation();
   if (!id) {
@@ -29,4 +29,4 @@ function FilmNav(): JSX.Element {
   );
 }
 
-export default FilmNav;
+export default NavTab;

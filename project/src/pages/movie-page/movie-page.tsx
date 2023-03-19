@@ -2,12 +2,13 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer';
 import {Link, Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
-import FilmNav from './film-nav';
-import { useEffect } from 'react';
+import NavTab from './nav-tab';
+import {useEffect, useRef} from 'react';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const isNavigateNeed = useRef(true);
 
   const location = useLocation();
   useEffect(() => {
@@ -18,7 +19,9 @@ function MoviePage(): JSX.Element {
     if (!isOverviewActive && !isDetailsActive && !isReviewsActive) {
       navigate(Path.FilmsPages.Tabs.Overview);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return () => {isNavigateNeed.current = false;};
+  }, [isNavigateNeed.current]);
 
   return (
     <>
@@ -65,7 +68,7 @@ function MoviePage(): JSX.Element {
               <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
             </div>
             <div className="film-card__desc">
-              <FilmNav/>
+              <NavTab/>
               <Outlet/>
             </div>
           </div>

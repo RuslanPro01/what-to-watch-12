@@ -1,4 +1,4 @@
-function Review(): JSX.Element {
+function ReviewTab(): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
@@ -82,4 +82,4 @@ function Review(): JSX.Element {
   );
 }
 
-export default Review;
+export default ReviewTab;
