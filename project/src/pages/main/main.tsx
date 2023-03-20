@@ -1,11 +1,16 @@
-import SmallFilmCard from '../../components/small-film-card/small-film-card';
+import {Films} from '../../mock/films';
+import FilmCards from '../../components/film-cards/film-cards';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
+
 type MainProps = {
   filmName: string;
   yearFilm: number;
   filmGenre: string;
+  films: Films;
 }
 
-function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
+function Main({filmName, yearFilm, filmGenre, films}: MainProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -13,25 +18,7 @@ function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        <Header/>
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
@@ -96,27 +83,12 @@ function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
               <a href="#" className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            {
-              Array.from({length: 20}, ((_, index: number) => <SmallFilmCard key={index}/>))
-            }
-          </div>
+          <FilmCards films={films}/>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
         </section>
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          <div className="copyright">
-            <p>© 2019 - {new Date().getFullYear()} What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </>
   );

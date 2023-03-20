@@ -1,19 +1,26 @@
-function Player(): JSX.Element {
-  const playerTogglerStyle: {
-    left: string;
-  } = {
-    left: '30%'
-  };
+import {useNavigate, useParams} from 'react-router-dom';
+import {Path} from '../../common-const';
 
+function Player(): JSX.Element {
+  const navigate = useNavigate();
+  const {id} = useParams<{ id: string }>();
   return (
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
-      <button type="button" className="player__exit">Exit</button>
+      <button
+        type="button"
+        className="player__exit"
+        onClick={() => {
+          navigate(`${Path.FilmsPages.MainPage.replace(':id', id as string)}`);
+        }}
+      >
+        Exit
+      </button>
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
             <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={playerTogglerStyle}>Toggler</div>
+            <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
           </div>
           <div className="player__time-value">1:30:29</div>
         </div>
