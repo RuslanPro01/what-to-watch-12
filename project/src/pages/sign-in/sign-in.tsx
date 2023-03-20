@@ -1,4 +1,4 @@
-import Footer from '../../components/footer';
+import Footer from '../../components/footer/footer';
 import Logo from '../../components/header/logo';
 
 function SignIn(): JSX.Element {

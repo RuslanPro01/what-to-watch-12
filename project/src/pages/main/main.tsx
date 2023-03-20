@@ -1,7 +1,7 @@
 import {Films} from '../../mock/films';
 import FilmCards from '../../components/film-cards/film-cards';
 import Header from '../../components/header/header';
-import Footer from '../../components/footer';
+import Footer from '../../components/footer/footer';
 
 type MainProps = {
   filmName: string;

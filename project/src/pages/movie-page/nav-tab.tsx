@@ -8,15 +8,14 @@ function NavTab(): JSX.Element {
     return <Navigate to={Path.PageNotFound}/>;
 
   }
-  const isOverviewActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Overview);
   const isDetailsActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Details);
   const isReviewsActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Reviews);
 
   return (
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
-        <li className={`film-nav__item ${isOverviewActive ? 'film-nav__item--active' : ''}`}>
-          <Link to={`/films/${id}/${Path.FilmsPages.Tabs.Overview}`} className="film-nav__link">Overview</Link>
+        <li className={`film-nav__item ${!isDetailsActive && !isReviewsActive ? 'film-nav__item--active' : ''}`}>
+          <Link to={`/films/${id}`} className="film-nav__link">Overview</Link>
         </li>
         <li className={`film-nav__item ${isDetailsActive ? 'film-nav__item--active' : ''}`}>
           <Link to={`/films/${id}/${Path.FilmsPages.Tabs.Details}`} className="film-nav__link">Details</Link>

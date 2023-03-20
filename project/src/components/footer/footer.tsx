@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {Path} from '../common-const';
+import {Path} from '../../common-const';
 
 function Footer(): JSX.Element {
   return (

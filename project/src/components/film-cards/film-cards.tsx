@@ -3,21 +3,12 @@ import FilmCard from '../film-card/film-card';
 import {useState} from 'react';
 
 function FilmCards({films}: {films: Films}): JSX.Element {
-  const [activeFilm, setActiveFilm] = useState<{isActiveFilm: boolean; id: null | number}>({
-    isActiveFilm: false,
-    id: null
-  });
+  const [activeFilm, setActiveFilm] = useState<null | number>(null);
   const handleFilmCardMouseEnter: (id: number) => void = (id) => {
-    setActiveFilm({
-      isActiveFilm: true,
-      id: id
-    });
+    setActiveFilm(id);
   };
   const handleFilmCardMouseLeave: () => void = () => {
-    setActiveFilm({
-      isActiveFilm: false,
-      id: null
-    });
+    setActiveFilm(null);
   };
 
   return (
@@ -30,7 +21,7 @@ function FilmCards({films}: {films: Films}): JSX.Element {
               previewImage={previewImage}
               id={id}
               key={id}
-              isActiveFilm={activeFilm.isActiveFilm}
+              isActiveFilm={id === activeFilm}
               onMouseEnter={() => handleFilmCardMouseEnter(id)}
               onMouseLeave={handleFilmCardMouseLeave}
             />

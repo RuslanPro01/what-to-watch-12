@@ -1,27 +1,12 @@
 import Header from '../../components/header/header';
-import Footer from '../../components/footer';
-import {Link, Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
+import Footer from '../../components/footer/footer';
+import {Link, Outlet, useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
 import NavTab from './nav-tab';
-import {useEffect, useRef} from 'react';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const isNavigateNeed = useRef(true);
-
-  const location = useLocation();
-  useEffect(() => {
-    const isOverviewActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Overview);
-    const isDetailsActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Details);
-    const isReviewsActive = location.pathname.endsWith(Path.FilmsPages.Tabs.Reviews);
-
-    if (!isOverviewActive && !isDetailsActive && !isReviewsActive) {
-      navigate(Path.FilmsPages.Tabs.Overview);
-    }
-
-    return () => {isNavigateNeed.current = false;};
-  }, [isNavigateNeed.current]);
 
   return (
     <>

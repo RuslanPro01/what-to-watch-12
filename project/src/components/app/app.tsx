@@ -30,7 +30,7 @@ function App({filmName, yearFilm, filmGenre, films}: AppProps): JSX.Element {
         <Route path={MainPage} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}/>
         <Route path={Login} element={<SignIn/>}/>
         <Route path={FilmsPages.MainPage} element={<MoviePage/>}>
-          <Route path={FilmsPages.Tabs.Overview} element={<OverviewTab/>} />
+          <Route index element={<OverviewTab/>} />
           <Route path={FilmsPages.Tabs.Details} element={<DetailsTab/>} />
           <Route path={FilmsPages.Tabs.Reviews} element={<ReviewTab/>} />
         </Route>
