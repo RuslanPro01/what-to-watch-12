@@ -3,13 +3,26 @@ import {Link} from 'react-router-dom';
 type FilmCardProps = {
   name: string;
   previewImage: string;
+  videoLink: string;
+  previewVideoLink: string;
   id: number;
   isActiveFilm: boolean;
+  isNeedVideoPlayer: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
 
-function FilmCard({name, previewImage, id, isActiveFilm, onMouseEnter, onMouseLeave}: FilmCardProps): JSX.Element {
+function FilmCard({
+  name,
+  previewImage,
+  id,
+  videoLink,
+  previewVideoLink,
+  isActiveFilm,
+  isNeedVideoPlayer,
+  onMouseEnter,
+  onMouseLeave
+}: FilmCardProps): JSX.Element {
 
   return (
     <article
@@ -18,7 +31,25 @@ function FilmCard({name, previewImage, id, isActiveFilm, onMouseEnter, onMouseLe
       onMouseLeave={onMouseLeave}
     >
       <div className="small-film-card__image">
-        <img src={previewImage} alt={name} width="280" height="175"/>
+        {
+          isNeedVideoPlayer ?
+            <video
+              src={videoLink}
+              width="280"
+              height="175"
+              poster={previewVideoLink}
+              autoPlay
+              muted
+              loop
+            >
+            </video> :
+            <img
+              src={previewImage}
+              alt={name}
+              width="280"
+              height="175"
+            />
+        }
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`films/${id}/`}>{name}</Link>

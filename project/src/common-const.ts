@@ -14,3 +14,5 @@ export const Path = {
   MyListPage: '/mylist',
   PageNotFound: '*'
 } as const;
+
+export const timeOutActiveVideo = 1000;
