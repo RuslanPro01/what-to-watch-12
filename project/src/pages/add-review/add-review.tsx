@@ -4,11 +4,15 @@ import {Link} from 'react-router-dom';
 import {Path} from '../../common-const';
 import {useParams} from 'react-router-dom';
 import ReviewForm from '../../components/review-form/review-form';
+import {Helmet} from 'react-helmet-async';
 
 function AddReview(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   return (
     <section className="film-card film-card--full">
+      <Helmet>
+        <title>Add review</title>
+      </Helmet>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>

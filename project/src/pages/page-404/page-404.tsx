@@ -1,10 +1,14 @@
 import './page-404-style.css';
 import {Link} from 'react-router-dom';
 import {Path} from '../../common-const';
+import {Helmet} from 'react-helmet-async';
 
 function Page404(): JSX.Element {
   return (
     <div className="error-page">
+      <Helmet>
+        <title>Page 404 o_o</title>
+      </Helmet>
       <header className="page-header user-page__head">
         <div className="logo">
           <Link to={Path.MainPage} className="logo__link">

@@ -1,4 +1,5 @@
 import Main from '../../pages/main/main';
+import {HelmetProvider} from 'react-helmet-async';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import SignIn from '../../pages/sign-in/sign-in';
 import Page404 from '../../pages/page-404/page-404';
@@ -25,26 +26,28 @@ type AppProps = {
 
 function App({filmName, yearFilm, filmGenre, films}: AppProps): JSX.Element {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={MainPage} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}/>
-        <Route path={Login} element={<SignIn/>}/>
-        <Route path={FilmsPages.MainPage} element={<MoviePage/>}>
-          <Route index element={<OverviewTab/>} />
-          <Route path={FilmsPages.Tabs.Details} element={<DetailsTab/>} />
-          <Route path={FilmsPages.Tabs.Reviews} element={<ReviewTab/>} />
-        </Route>
-        <Route path={`${FilmsPages.MainPage}/${FilmsPages.Review}`} element={<AddReview/>}/>
-        <Route path={PlayerPage} element={<Player/>}/>
-        <Route path={MyListPage} element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-            <MyList films={films}/>
-          </PrivateRoute>
-        }
-        />
-        <Route path={PageNotFound} element={<Page404/>}/>
-      </Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={MainPage} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}/>
+          <Route path={Login} element={<SignIn/>}/>
+          <Route path={FilmsPages.MainPage} element={<MoviePage/>}>
+            <Route index element={<OverviewTab/>} />
+            <Route path={FilmsPages.Tabs.Details} element={<DetailsTab/>} />
+            <Route path={FilmsPages.Tabs.Reviews} element={<ReviewTab/>} />
+          </Route>
+          <Route path={`${FilmsPages.MainPage}/${FilmsPages.Review}`} element={<AddReview/>}/>
+          <Route path={PlayerPage} element={<Player/>}/>
+          <Route path={MyListPage} element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <MyList films={films}/>
+            </PrivateRoute>
+          }
+          />
+          <Route path={PageNotFound} element={<Page404/>}/>
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

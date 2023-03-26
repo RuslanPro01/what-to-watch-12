@@ -15,4 +15,4 @@ export const Path = {
   PageNotFound: '*'
 } as const;
 
-export const timeOutActiveVideo = 1000;
+export const TIME_OUT_ACTIVE_VIDEO = 1000;

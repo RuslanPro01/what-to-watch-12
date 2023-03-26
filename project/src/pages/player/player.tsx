@@ -1,11 +1,15 @@
 import {useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
+import {Helmet} from 'react-helmet-async';
 
 function Player(): JSX.Element {
   const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
   return (
     <div className="player">
+      <Helmet>
+        <title>Film player</title>
+      </Helmet>
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
       <button
         type="button"
