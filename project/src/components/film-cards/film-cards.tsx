@@ -3,13 +3,7 @@ import FilmCard from '../film-card/film-card';
 import {useState} from 'react';
 
 function FilmCards({films}: {films: Films}): JSX.Element {
-  const [activeFilm, setActiveFilm] = useState<null | number>(null);
-  const handleFilmCardMouseEnter: (id: number) => void = (id) => {
-    setActiveFilm(id);
-  };
-  const handleFilmCardMouseLeave: () => void = () => {
-    setActiveFilm(null);
-  };
+  const [activeFilm,] = useState<null | number>(null);
 
   return (
     <div className="catalog__films-list">
@@ -22,8 +16,8 @@ function FilmCards({films}: {films: Films}): JSX.Element {
               id={id}
               key={id}
               isActiveFilm={id === activeFilm}
-              onMouseEnter={() => handleFilmCardMouseEnter(id)}
-              onMouseLeave={handleFilmCardMouseLeave}
+              videoLink={videoLink}
+              previewVideoLink={previewVideoLink}
             />
           )
         )
