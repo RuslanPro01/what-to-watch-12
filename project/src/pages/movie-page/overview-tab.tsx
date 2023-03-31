@@ -1,6 +1,12 @@
+import {Path} from '../../common-const';
+import {Helmet} from 'react-helmet-async';
+
 function OverviewTab(): JSX.Element {
   return (
     <>
+      <Helmet>
+        <title>About film — {Path.FilmsPages.Tabs.Overview}</title>
+      </Helmet>
       <div className="film-rating">
         <div className="film-rating__score">8,9</div>
         <p className="film-rating__meta">

@@ -1,6 +1,12 @@
+import {Path} from '../../common-const';
+import {Helmet} from 'react-helmet-async';
+
 function ReviewTab(): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
+      <Helmet>
+        <title>About film — {Path.FilmsPages.Tabs.Reviews}</title>
+      </Helmet>
       <div className="film-card__reviews-col">
         <div className="review">
           <blockquote className="review__quote">

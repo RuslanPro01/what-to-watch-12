@@ -1,9 +1,13 @@
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/header/logo';
+import {Helmet} from 'react-helmet-async';
 
 function SignIn(): JSX.Element {
   return (
     <div className="user-page">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <header className="page-header user-page__head">
         <Logo/>
         <h1 className="page-title user-page__title">Sign in</h1>
