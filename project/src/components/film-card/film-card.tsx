@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {TIME_OUT_ACTIVE_VIDEO} from '../../common-const';
 
 type FilmCardProps = {
@@ -10,6 +10,8 @@ type FilmCardProps = {
   isActiveFilm: boolean;
   videoLink: string;
   previewVideoLink: string;
+  handleMouseEnter: (id: number | null) => void;
+  handleMouseLeave: (id: number | null) => void;
 }
 
 function FilmCard({
@@ -18,44 +20,30 @@ function FilmCard({
   id,
   isActiveFilm,
   videoLink,
-  previewVideoLink
+  previewVideoLink,
+  handleMouseEnter,
+  handleMouseLeave
 }: FilmCardProps): JSX.Element {
-  const [isPlaying, setIsVideoPlayer] = useState(false);
-  const timeIntervalIdRef = useRef<null | number>(null);
-  const filmCardRef = useRef<HTMLDivElement | null>(null);
-  const handleFilmCardMouseEnter = () => {
-    timeIntervalIdRef.current = window.setTimeout(() => {
-      setIsVideoPlayer(true);
-    }, TIME_OUT_ACTIVE_VIDEO);
-  };
-
-  const handleFilmCardMouseLeave = () => {
-    if (timeIntervalIdRef.current) {
-      window.clearTimeout(timeIntervalIdRef.current);
-      setIsVideoPlayer(false);
-    }
-  };
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const currentRef = filmCardRef.current;
-
-    if (currentRef) {
-      currentRef.addEventListener('mouseenter', handleFilmCardMouseEnter);
-      currentRef.addEventListener('mouseleave', handleFilmCardMouseLeave);
+    let timeOut: NodeJS.Timeout;
+    if (isActiveFilm) {
+      timeOut = setTimeout(() => setIsPlaying(true), TIME_OUT_ACTIVE_VIDEO);
+    } else {
+      setIsPlaying(false);
     }
 
     return () => {
-      if (currentRef) {
-        currentRef.removeEventListener('mouseenter', handleFilmCardMouseEnter);
-        currentRef.removeEventListener('mouseleave', handleFilmCardMouseLeave);
-      }
+      clearTimeout(timeOut);
     };
   }, [isActiveFilm]);
 
   return (
     <article
       className={classNames('small-film-card', 'catalog__films-card', {'active-film-card': isActiveFilm})}
-      ref={filmCardRef}
+      onMouseEnter={() => handleMouseEnter(id)}
+      onMouseLeave={() => handleMouseLeave(null)}
     >
       <div className="small-film-card__image">
         {
