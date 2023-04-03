@@ -10,15 +10,13 @@ type InitialState = {
   filteredFilms: Films | null;
 }
 
-let genres: string[] = [];
 const uniGenres = new Set<string>();
-
 uniGenres.add(ALL_GENRES);
+
 for (const film of films) {
   uniGenres.add(film.genre);
 }
-
-genres = [...uniGenres];
+export const genres = [...uniGenres];
 
 const initialState: InitialState = {
   genre: ALL_GENRES,
