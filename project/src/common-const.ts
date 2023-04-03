@@ -2,7 +2,7 @@ export const Path = {
   MainPage: '/',
   Login: '/login',
   FilmsPages: {
-    MainPage: '/films/:id',
+    MainPage: '/AllFilms/:id',
     Review: 'review',
     Tabs: {
       Overview: 'overview',
