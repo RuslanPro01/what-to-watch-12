@@ -1,13 +1,13 @@
 import {Films, films} from '../mock/films';
 import {createReducer} from '@reduxjs/toolkit';
-import {changeGenre, getFilmsOfGenre} from './action';
+import {changeGenre, setFilmsOfGenre} from './action';
 
-const ALL_GENRES = 'All Genres';
+export const ALL_GENRES = 'All Genres';
 
 type InitialState = {
   genre: typeof genres[number];
   allFilms: Films;
-  filteredFilms: Films | null;
+  filteredFilms: Films;
 }
 
 const uniGenres = new Set<string>();
@@ -21,7 +21,7 @@ export const genres = [...uniGenres];
 const initialState: InitialState = {
   genre: ALL_GENRES,
   allFilms: films,
-  filteredFilms: null
+  filteredFilms: films
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -29,7 +29,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(changeGenre, (state, action) => {
       state.genre = action.payload;
     })
-    .addCase(getFilmsOfGenre, (state) => {
+    .addCase(setFilmsOfGenre, (state) => {
       if (state.genre === ALL_GENRES) {
         state.filteredFilms = state.allFilms;
       } else {
