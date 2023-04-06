@@ -80,12 +80,12 @@ function MoviePage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           {
-            similarFilms.length >= 1 ?
+            similarFilms.length ?
               <>
                 <h2 className="catalog__title">More like this</h2>
                 <FilmCards films={similarFilms}/>
               </> :
-              false
+              null
           }
         </section>
         <Footer/>
