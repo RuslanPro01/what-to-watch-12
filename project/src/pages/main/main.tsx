@@ -1,5 +1,4 @@
 import {Films} from '../../mock/films';
-import FilmCards from '../../components/film-cards/film-cards';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import {Helmet} from 'react-helmet-async';
