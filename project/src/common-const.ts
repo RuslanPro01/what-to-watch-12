@@ -1,5 +1,8 @@
 export const Path = {
-  MainPage: '/',
+  MainPage: {
+    initial: '/',
+    filmOfGenre: ':pathGenre',
+  },
   Login: '/login',
   FilmsPages: {
     MainPage: '/AllFilms/:id',
