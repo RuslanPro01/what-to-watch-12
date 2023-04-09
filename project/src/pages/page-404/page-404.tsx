@@ -11,7 +11,7 @@ function Page404(): JSX.Element {
       </Helmet>
       <header className="page-header user-page__head">
         <div className="logo">
-          <Link to={Path.MainPage} className="logo__link">
+          <Link to={Path.MainPage.initial} className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -33,7 +33,7 @@ function Page404(): JSX.Element {
           If you still want to find this page, we suggest checking your space coordinates or trying to catch it with
           teleportation. Good luck!
         </p>
-        <Link to={Path.MainPage} className="error-container__link">
+        <Link to={Path.MainPage.initial} className="error-container__link">
           GO TO THE MAIN PAGE
         </Link>
       </section>

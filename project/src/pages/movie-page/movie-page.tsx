@@ -5,6 +5,7 @@ import {Path} from '../../common-const';
 import NavTab from './nav-tab';
 import {films} from '../../mock/films';
 import FilmCards from '../../components/film-cards/film-cards';
+import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
@@ -29,6 +30,7 @@ function MoviePage(): JSX.Element {
   return (
     <>
       <section className="film-card film-card--full" style={{background: checkedFilm.backgroundColor}}>
+        <ScrollToTop/>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={checkedFilm.backgroundImage} alt={checkedFilm.name}/>
