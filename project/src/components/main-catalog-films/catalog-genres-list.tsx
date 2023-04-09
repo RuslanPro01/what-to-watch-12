@@ -3,15 +3,15 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {convertGenreToRoute} from '../../utils';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre, setFilmsOfGenre} from '../../store/action';
+import {changeGenre} from '../../store/action';
 
 function CatalogGenresList(): JSX.Element {
   const chosenGenre = useAppSelector((state) => state.genre);
   const dispatch = useAppDispatch();
   const handleGenreLink = (genre: string) => {
     dispatch(changeGenre(genre));
-    dispatch(setFilmsOfGenre());
   };
+
   return (
     <ul className="catalog__genres-list">
       {

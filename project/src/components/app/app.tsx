@@ -16,6 +16,7 @@ import DetailsTab from '../../pages/movie-page/details-tab';
 import ReviewTab from '../../pages/movie-page/review-tab';
 import FilmCards from '../film-cards/film-cards';
 import {useAppSelector} from '../../hooks';
+import {selectFilteredFilms} from '../../selectors';
 
 const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 
@@ -27,14 +28,14 @@ type AppProps = {
 }
 
 function App({filmName, yearFilm, filmGenre, films}: AppProps): JSX.Element {
-  const filteredFilms = useAppSelector((state) => state.filteredFilms);
+  const filteredFilms = useAppSelector(selectFilteredFilms);
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={MainPage} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}>
+          <Route path={MainPage.initial} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}>
             <Route index element={<FilmCards films={filteredFilms}/>}/>
-            <Route path={':pathGenre'} element={<FilmCards films={filteredFilms}/>}/>
+            <Route path={MainPage.filmOfGenre} element={<FilmCards films={filteredFilms}/>}/>
           </Route>
           <Route path={Login} element={<SignIn/>}/>
           <Route path={FilmsPages.MainPage} element={<MoviePage/>}>
