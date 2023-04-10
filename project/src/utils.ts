@@ -6,25 +6,24 @@ export function convertGenreToRoute(genre: string): string {
   return genre.toLowerCase();
 }
 
-function toUpperFirstSubmol(word: string) {
-  word = word.split('').map((symbol, index) => {
+function toUpperFirstSymbol(word: string) {
+  return word.split('').map((symbol, index) => {
     if (index === 0) {
       return symbol.toUpperCase();
     }
     return symbol;
   }).join('');
-  return word;
 }
 
-export function convertRouteGenreToGenre(pathGenre: string): string {
+export function capitalizeRouteGenre(pathGenre: string): string {
   if (pathGenre.includes('-')) {
     const words = pathGenre.split('-').map((word, index) => {
       if (index === 0) {
-        return toUpperFirstSubmol(word);
+        return toUpperFirstSymbol(word);
       }
       return word;
     });
     return words.join(' ');
   }
-  return toUpperFirstSubmol(pathGenre);
+  return toUpperFirstSymbol(pathGenre);
 }

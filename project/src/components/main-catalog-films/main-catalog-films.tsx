@@ -1,7 +1,7 @@
 import CatalogGenresList from './catalog-genres-list';
 import {Outlet, useParams} from 'react-router-dom';
 import {useLayoutEffect} from 'react';
-import {convertRouteGenreToGenre} from '../../utils';
+import {capitalizeRouteGenre} from '../../utils';
 import {ALL_GENRES, genres} from '../../store/reducer';
 import {changeGenre} from '../../store/action';
 import {useAppDispatch} from '../../hooks';
@@ -11,7 +11,7 @@ function MainCatalogFilms(): JSX.Element {
   const dispatch = useAppDispatch();
   useLayoutEffect(() => {
     if (pathGenre) {
-      const convertedPathGenre = convertRouteGenreToGenre(pathGenre);
+      const convertedPathGenre = capitalizeRouteGenre(pathGenre);
       if (genres.some((element) => element === convertedPathGenre)) {
         dispatch(changeGenre(convertedPathGenre));
       }
