@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {films} from './mock/films';
+import {Provider} from 'react-redux';
+import {store} from './store';
 
 const PromoFilm = {
   Genre: 'Drama',
@@ -15,6 +17,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App filmName={PromoFilm.Name} yearFilm={PromoFilm.Year} filmGenre={PromoFilm.Genre} films={films}/>
+    <Provider store={store}>
+      <App filmName={PromoFilm.Name} yearFilm={PromoFilm.Year} filmGenre={PromoFilm.Genre} films={films}/>
+    </Provider>
   </React.StrictMode>,
 );
