@@ -5,7 +5,6 @@ import {convertRouteGenreToGenre} from '../../utils';
 import {ALL_GENRES, genres} from '../../store/reducer';
 import {changeGenre} from '../../store/action';
 import {useAppDispatch} from '../../hooks';
-import {CatalogMoreButton} from './catalog-more-button';
 
 function MainCatalogFilms(): JSX.Element {
   const {pathGenre} = useParams();
@@ -25,7 +24,6 @@ function MainCatalogFilms(): JSX.Element {
       <h2 className="catalog__title visually-hidden">Catalog</h2>
       <CatalogGenresList/>
       <Outlet/>
-      <CatalogMoreButton/>
     </section>
   );
 }
