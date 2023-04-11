@@ -17,6 +17,7 @@ import ReviewTab from '../../pages/movie-page/review-tab';
 import FilmCards from '../film-cards/film-cards';
 import {useAppSelector} from '../../hooks';
 import {selectFilteredFilms} from '../../selectors';
+import DisplayedCards from '../main-catalog-films/displayed-cards';
 
 const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 
@@ -35,13 +36,13 @@ function App({filmName, yearFilm, filmGenre, films}: AppProps): JSX.Element {
         <Routes>
           <Route path={MainPage.initial} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}>
             <Route index element={<FilmCards films={filteredFilms}/>}/>
-            <Route path={MainPage.filmOfGenre} element={<FilmCards films={filteredFilms}/>}/>
+            <Route path={MainPage.filmOfGenre} element={<DisplayedCards films={filteredFilms}/>}/>
           </Route>
           <Route path={Login} element={<SignIn/>}/>
           <Route path={FilmsPages.MainPage} element={<MoviePage/>}>
             <Route index element={<OverviewTab/>} />
-            <Route path={FilmsPages.Tabs.Details} element={<DetailsTab/>} />
-            <Route path={FilmsPages.Tabs.Reviews} element={<ReviewTab/>} />
+            <Route path={FilmsPages.Tabs.Details} element={<DetailsTab/>}/>
+            <Route path={FilmsPages.Tabs.Reviews} element={<ReviewTab/>}/>
           </Route>
           <Route path={`${FilmsPages.MainPage}/${FilmsPages.Review}`} element={<AddReview/>}/>
           <Route path={PlayerPage} element={<Player/>}/>
