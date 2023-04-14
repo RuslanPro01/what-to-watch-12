@@ -4,6 +4,8 @@ import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import {fetchFilmsAction} from './store/async-actions';
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from 'react-toastify';
 
 const PromoFilm = {
   Genre: 'Drama',
@@ -20,6 +22,7 @@ store.dispatch(fetchFilmsAction());
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer/>
       <App filmName={PromoFilm.Name} yearFilm={PromoFilm.Year} filmGenre={PromoFilm.Genre}/>
     </Provider>
   </React.StrictMode>,
