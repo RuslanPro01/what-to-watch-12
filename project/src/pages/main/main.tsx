@@ -1,4 +1,4 @@
-import {Films} from '../../mock/films';
+import {Films} from '../../types/films';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import {Helmet} from 'react-helmet-async';

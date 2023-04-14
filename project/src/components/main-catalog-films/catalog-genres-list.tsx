@@ -1,12 +1,13 @@
-import {genres} from '../../store/reducer';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {convertGenreToRoute} from '../../utils';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre} from '../../store/action';
+import {selectedGenres} from '../../selectors';
 
 function CatalogGenresList(): JSX.Element {
   const chosenGenre = useAppSelector((state) => state.genre);
+  const uniqGenres = useAppSelector(selectedGenres);
   const dispatch = useAppDispatch();
   const handleGenreLink = (genre: string) => {
     dispatch(changeGenre(genre));
@@ -15,7 +16,7 @@ function CatalogGenresList(): JSX.Element {
   return (
     <ul className="catalog__genres-list">
       {
-        genres.map((genre) =>
+        uniqGenres.map((genre) =>
           (
             <li className={classNames('catalog__genres-item', {'catalog__genres-item--active': chosenGenre === genre})} key={genre}>
               <Link

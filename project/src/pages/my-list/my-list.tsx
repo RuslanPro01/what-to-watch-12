@@ -1,5 +1,5 @@
 import FilmCards from '../../components/film-cards/film-cards';
-import {Films} from '../../mock/films';
+import {Films} from '../../types/films';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/header/logo';
 import UserBlock from '../../components/header/user-block';

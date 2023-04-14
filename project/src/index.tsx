@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {films} from './mock/films';
 import {Provider} from 'react-redux';
 import {store} from './store';
+import {fetchFilmsAction} from './store/async-actions';
 
 const PromoFilm = {
   Genre: 'Drama',
@@ -15,10 +15,12 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+store.dispatch(fetchFilmsAction());
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App filmName={PromoFilm.Name} yearFilm={PromoFilm.Year} filmGenre={PromoFilm.Genre} films={films}/>
+      <App filmName={PromoFilm.Name} yearFilm={PromoFilm.Year} filmGenre={PromoFilm.Genre}/>
     </Provider>
   </React.StrictMode>,
 );

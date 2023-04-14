@@ -1,5 +1,5 @@
 import {useDisplayedCards} from '../../hooks/use-displayed-cards';
-import {Films} from '../../mock/films';
+import {Films} from '../../types/films';
 import FilmCards from '../film-cards/film-cards';
 import {CatalogMoreButton} from './catalog-more-button';
 

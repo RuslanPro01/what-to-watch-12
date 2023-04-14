@@ -3,13 +3,15 @@ import Footer from '../../components/footer/footer';
 import {Link, Navigate, Outlet, useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
 import NavTab from './nav-tab';
-import {films} from '../../mock/films';
 import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
+import {useAppSelector} from '../../hooks';
+import {selectedAllFilms} from '../../selectors';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const films = useAppSelector(selectedAllFilms);
   if (!id) {
     return <Navigate to={Path.PageNotFound} />;
   }

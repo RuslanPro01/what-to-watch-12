@@ -25,3 +25,5 @@ yarn-error.log*
 .idea
 *.sublime*
 .vscode
+
+src/test/
