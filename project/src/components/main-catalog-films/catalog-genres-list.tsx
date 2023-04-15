@@ -4,6 +4,7 @@ import {convertGenreToRoute} from '../../utils';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre} from '../../store/action';
 import {selectedGenres} from '../../selectors';
+import {Helmet} from 'react-helmet-async';
 
 function CatalogGenresList(): JSX.Element {
   const chosenGenre = useAppSelector((state) => state.genre);
@@ -15,6 +16,9 @@ function CatalogGenresList(): JSX.Element {
 
   return (
     <ul className="catalog__genres-list">
+      <Helmet>
+        <title>{chosenGenre} films</title>
+      </Helmet>
       {
         uniqGenres.map((genre) =>
           (

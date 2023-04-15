@@ -2,11 +2,12 @@ import {Films} from '../types/films';
 import {createReducer} from '@reduxjs/toolkit';
 import {changeGenre, changeLoadStatus, loadFilms} from './action';
 import {ALL_GENRES} from '../common-const';
+import {loadStatuses} from '../types/load-statuses';
 
 type InitialState = {
   genre: string;
   allFilms: Films;
-  isLoaded: boolean;
+  loadStatus: loadStatuses;
   genres: string[];
 }
 
@@ -14,7 +15,7 @@ type InitialState = {
 const initialState: InitialState = {
   genre: ALL_GENRES,
   allFilms: [],
-  isLoaded: true,
+  loadStatus: 'loading',
   genres: [ALL_GENRES],
 };
 
@@ -38,7 +39,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.genres = generateUniqueGenres(action.payload);
     })
     .addCase(changeLoadStatus, (state, action) => {
-      state.isLoaded = action.payload;
+      state.loadStatus = action.payload;
     });
 });
 

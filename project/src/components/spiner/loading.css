@@ -1,4 +1,4 @@
-.loading {
+/*.loading {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#170202), to(#0c0101));
   background-image: linear-gradient(-180deg, #170202 0%, #0c0101 100%);
   -webkit-box-direction: normal;
@@ -48,7 +48,7 @@
 .loading-container__link[href]:hover, .loading-container__link[href]:focus {
   border-color: rgba(84, 80, 62, 0.36);
   color: #54503e;
-}
+}*/
 
 @keyframes loadingSpinner {
   0% {

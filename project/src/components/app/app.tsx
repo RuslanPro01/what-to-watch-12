@@ -13,10 +13,7 @@ import MyList from '../../pages/my-list/my-list';
 import OverviewTab from '../../pages/movie-page/overview-tab';
 import DetailsTab from '../../pages/movie-page/details-tab';
 import ReviewTab from '../../pages/movie-page/review-tab';
-import {useAppSelector} from '../../hooks';
-import {selectedAllFilms, selectedLoadStatus, selectFilteredFilms} from '../../selectors';
 import DisplayedCards from '../main-catalog-films/displayed-cards';
-import {Loading} from '../loading/loading';
 
 const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 
@@ -27,18 +24,12 @@ type AppProps = {
 }
 
 function App({filmName, yearFilm, filmGenre}: AppProps): JSX.Element {
-  const filteredFilms = useAppSelector(selectFilteredFilms);
-  const loadStatus = useAppSelector(selectedLoadStatus);
-  const films = useAppSelector(selectedAllFilms);
-  if (loadStatus) {
-    return <Loading />;
-  }
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={MainPage.initial} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre} films={films}/>}>
-            <Route path={MainPage.filmOfGenre} element={<DisplayedCards films={filteredFilms}/>}/>
+          <Route path={MainPage.initial} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre}/>}>
+            <Route path={MainPage.filmOfGenre} element={<DisplayedCards/>}/>
           </Route>
           <Route path={Login} element={<SignIn/>}/>
           <Route path={FilmsPages.MainPage} element={<MoviePage/>}>
@@ -50,7 +41,7 @@ function App({filmName, yearFilm, filmGenre}: AppProps): JSX.Element {
           <Route path={PlayerPage} element={<Player/>}/>
           <Route path={MyListPage} element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <MyList films={films}/>
+              <MyList/>
             </PrivateRoute>
           }
           />
