@@ -1,8 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import {toast} from 'react-toastify';
-import {StatusCodeMapping} from './const';
+import {LoadStatus, StatusCodeMapping} from './const';
 import {changeLoadStatus} from '../store/action';
-import {LoadStatus} from '../store/const';
 import {store} from '../store';
 
 const BASE_URL = 'https://12.react.pages.academy/wtw';

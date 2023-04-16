@@ -7,44 +7,74 @@ import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
 import {useAppSelector} from '../../hooks';
 import {selectedAllFilms} from '../../selectors';
+import {useEffect, useState} from 'react';
+import {loadStatuses} from '../../types/load-statuses';
+import {Film} from '../../types/films';
+import {ApiRoute, LoadStatus} from '../../services/const';
+import {Spinner} from '../../components/spiner/spinner';
+import {api} from '../../store';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [loadStatus, setLoadStatus] = useState<loadStatuses>(LoadStatus.Loading);
+  const [film, setFilm] = useState<null | Film>(null);
+  useEffect(() => {
+    const loadFilm = async () => {
+      try {
+        if (id) {
+          const {data} = await api.get<Film>(ApiRoute.Film(id));
+          setFilm(data);
+          setLoadStatus(LoadStatus.Loaded);
+        }
+      }
+      catch (e) {
+        setLoadStatus(LoadStatus.Fail);
+      }
+    };
+    loadFilm();
+  }, [film, id]);
+
   const films = useAppSelector(selectedAllFilms);
   if (!id) {
     return <Navigate to={Path.PageNotFound} />;
   }
 
-  const checkedFilm = films.find((film) => film.id === +id);
-
-  if (!checkedFilm) {
+  if (loadStatus === LoadStatus.Loaded && !film) {
     return <Navigate to={Path.PageNotFound} />;
   }
 
-  const similarFilms = [...films].filter((film) => {
-    if (film.id === +id) {
+  const similarFilms = film ? [...films].filter((filmElement) => {
+    if (filmElement.id === +id) {
       return false;
     }
-    return film.genre === checkedFilm.genre;
-  });
+    return filmElement.genre === film.genre;
+  }) : [];
+
+  if (loadStatus === LoadStatus.Loading) {
+    return <Spinner />;
+  }
+
+  if (loadStatus === LoadStatus.Fail) {
+    return <div>Error :( Please, reload this page</div>;
+  }
 
   return (
     <>
-      <section className="film-card film-card--full" style={{background: checkedFilm.backgroundColor}}>
+      <section className="film-card film-card--full" style={{background: film?.backgroundColor}}>
         <ScrollToTop/>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={checkedFilm.backgroundImage} alt={checkedFilm.name}/>
+            <img src={film?.backgroundImage} alt={film?.name}/>
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <Header/>
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{checkedFilm.name}</h2>
+              <h2 className="film-card__title">{film?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{checkedFilm.genre}</span>
-                <span className="film-card__year">{checkedFilm.released}</span>
+                <span className="film-card__genre">{film?.genre}</span>
+                <span className="film-card__year">{film?.released}</span>
               </p>
               <div className="film-card__buttons">
                 <button
@@ -72,7 +102,7 @@ function MoviePage(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={checkedFilm.posterImage} alt={`${checkedFilm.name} poster`} width="218" height="327"/>
+              <img src={film?.posterImage} alt={`${film?.name ?? 'No'} poster`} width="218" height="327"/>
             </div>
             <div className="film-card__desc">
               <NavTab/>

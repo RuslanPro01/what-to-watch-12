@@ -3,8 +3,8 @@ import {AppDispatch} from '../types/store';
 import {State} from '../types/store';
 import {AxiosInstance} from 'axios';
 import {Films} from '../types/films';
-import {ApiRoute, LoadStatus} from './const';
 import {changeLoadStatus, loadFilms} from './action';
+import {ApiRoute, LoadStatus} from '../services/const';
 
 type asyncActionsProps = {
   dispatch: AppDispatch;

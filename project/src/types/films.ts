@@ -1,4 +1,4 @@
-type Film = {
+export type Film = {
   'name': string;
   'posterImage': string;
   'previewImage': string;

@@ -4,7 +4,7 @@ import {CatalogMoreButton} from './catalog-more-button';
 import {useAppSelector} from '../../hooks';
 import {selectedLoadStatus, selectFilteredFilms} from '../../selectors';
 import {Spinner} from '../spiner/spinner';
-import {LoadStatus} from '../../store/const';
+import {LoadStatus} from '../../services/const';
 
 function DisplayedCards(): JSX.Element {
   const filteredFilms = useAppSelector(selectFilteredFilms);
