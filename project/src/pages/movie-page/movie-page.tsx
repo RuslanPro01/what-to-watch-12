@@ -13,6 +13,7 @@ import {Film} from '../../types/films';
 import {ApiRoute, LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
 import {api} from '../../store';
+import FilmContext from '../../context/film-context';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
@@ -33,7 +34,7 @@ function MoviePage(): JSX.Element {
       }
     };
     loadFilm();
-  }, [film, id]);
+  }, [id]);
 
   const films = useAppSelector(selectedAllFilms);
   if (!id) {
@@ -106,7 +107,9 @@ function MoviePage(): JSX.Element {
             </div>
             <div className="film-card__desc">
               <NavTab/>
-              <Outlet/>
+              <FilmContext.Provider value={film}>
+                <Outlet/>
+              </FilmContext.Provider>
             </div>
           </div>
         </div>
