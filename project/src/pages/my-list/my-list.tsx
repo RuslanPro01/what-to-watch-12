@@ -1,16 +1,14 @@
 import FilmCards from '../../components/film-cards/film-cards';
-import {Films} from '../../mock/films';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/header/logo';
 import UserBlock from '../../components/header/user-block';
 import {Helmet} from 'react-helmet-async';
+import {useAppSelector} from '../../hooks';
+import {selectedAllFilms} from '../../selectors';
 
-type PropsMyList = {
-  films: Films;
-}
-
-function MyList({films}: PropsMyList): JSX.Element {
-  const favoriteFilms = [...films].filter(({isFavorite}) => isFavorite === true);
+function MyList(): JSX.Element {
+  const films = useAppSelector(selectedAllFilms);
+  const favoriteFilms = [...films].filter(({isFavorite}) => isFavorite);
   return (
     <div className="user-page">
       <Helmet>

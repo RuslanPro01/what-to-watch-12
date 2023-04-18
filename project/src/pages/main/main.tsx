@@ -1,22 +1,16 @@
-import {Films} from '../../mock/films';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import {Helmet} from 'react-helmet-async';
 import MainCatalogFilms from '../../components/main-catalog-films/main-catalog-films';
 
 type MainProps = {
   filmName: string;
   yearFilm: number;
   filmGenre: string;
-  films: Films;
 }
 
-function Main({filmName, yearFilm, filmGenre, films}: MainProps): JSX.Element {
+function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
   return (
     <>
-      <Helmet>
-        <title>All genres</title>
-      </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>

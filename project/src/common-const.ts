@@ -19,3 +19,4 @@ export const Path = {
 } as const;
 
 export const TIME_OUT_ACTIVE_VIDEO = 1000;
+export const ALL_GENRES = 'All Genres';

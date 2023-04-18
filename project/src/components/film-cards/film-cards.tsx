@@ -1,4 +1,4 @@
-import {Films} from '../../mock/films';
+import {Films} from '../../types/films';
 import FilmCard from '../film-card/film-card';
 import {useState} from 'react';
 
