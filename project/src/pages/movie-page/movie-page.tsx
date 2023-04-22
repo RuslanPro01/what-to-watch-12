@@ -6,7 +6,7 @@ import NavTab from './nav-tab';
 import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
 import {useAppSelector} from '../../hooks';
-import {selectedAllFilms, selectedLoadStatusFilm} from '../../store/selectors';
+import {selectedAllFilms, selectedFilm, selectedLoadStatusFilm} from '../../store/selectors';
 import {useEffect, useState} from 'react';
 import {Film} from '../../types/films';
 import {LoadStatus} from '../../services/const';
@@ -14,34 +14,27 @@ import {Spinner} from '../../components/spiner/spinner';
 import FilmContext from '../../context/film-context';
 import {fetchFilmAction} from '../../store/async-actions';
 import {store} from '../../store';
-import {unwrapResult} from '@reduxjs/toolkit';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [film, setFilm] = useState<null | Film>(null);
-  const [filmNotFound, setFilmNotFound] = useState<boolean>(false);
   const loadStatusFilm = useAppSelector(selectedLoadStatusFilm);
-
-  useEffect(() => {
-    if (id) {
-      store.dispatch(fetchFilmAction(id))
-        .then(unwrapResult)
-        .then(() => {
-          const currentFilm = store.getState().MoviePage.FILM;
-          setFilm(currentFilm);
-          console.log(film);
-        })
-        .catch(() => {
-          setFilmNotFound(true);
-        });
-    }
-  }, [id]);
-
+  const selectFilm = useAppSelector(selectedFilm);
   const films = useAppSelector(selectedAllFilms);
 
-  if (!id || filmNotFound) {
+  useEffect(() => {
+    if (loadStatusFilm === LoadStatus.Loaded) {
+      setFilm(selectFilm);
+    }
+  }, [loadStatusFilm, selectFilm]);
+
+  if (!id) {
     return <Navigate to={Path.PageNotFound}/>;
+  }
+
+  if (id && loadStatusFilm === LoadStatus.Unknown) {
+    store.dispatch(fetchFilmAction(id));
   }
 
   const similarFilms = film ? [...films].filter((filmElement) => {
