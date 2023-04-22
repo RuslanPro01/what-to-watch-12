@@ -5,7 +5,7 @@ import {capitalizeRouteGenre, convertGenreToRoute} from '../../utils';
 import {changeGenre} from '../../store/action';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ALL_GENRES} from '../../common-const';
-import {selectedGenres} from '../../selectors';
+import {selectedGenres} from '../../store/selectors';
 
 function MainCatalogFilms(): JSX.Element {
   const {pathGenre} = useParams();

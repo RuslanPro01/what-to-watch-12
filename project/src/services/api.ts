@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import {toast} from 'react-toastify';
-import {LoadStatus, StatusCodeMapping} from './const';
-import {changeLoadStatus} from '../store/action';
+import {ApiRoute, LoadStatus, StatusCodeMapping} from './const';
+import {changeLoadStatusFilm, changeLoadStatusFilms} from '../store/action';
 import {store} from '../store';
 
 const BASE_URL = 'https://12.react.pages.academy/wtw';
@@ -16,11 +16,22 @@ export const createApi = () => {
   });
 
   api.interceptors.response.use(
-    (responce) => responce,
+    (response) => response,
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
         toast.error(error.response.data.error);
-        store.dispatch(changeLoadStatus(LoadStatus.Fail));
+        const urlAddress = error.response.config.url;
+        if (urlAddress) {
+          const isFilmsRouteError = urlAddress.includes(ApiRoute.Films);
+          const isFilmRouteError = urlAddress.includes(ApiRoute.Film('')) && +urlAddress[urlAddress.length - 1] >= 0;
+
+          if (isFilmsRouteError) {
+            store.dispatch(changeLoadStatusFilms(LoadStatus.Fail));
+          }
+          if (isFilmRouteError) {
+            store.dispatch(changeLoadStatusFilm(LoadStatus.Fail));
+          }
+        }
       }
       throw Error;
     }

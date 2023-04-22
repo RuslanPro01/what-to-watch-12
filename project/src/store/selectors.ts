@@ -1,10 +1,12 @@
 import {createSelector} from '@reduxjs/toolkit';
-import {State} from './types/store';
-import {ALL_GENRES} from './common-const';
+import {State} from '../types/store';
+import {ALL_GENRES} from '../common-const';
 
 const selectAllFilms = (state: State) => state.allFilms;
+const selectFilm = (state: State) => state.MoviePage.FILM;
 const selectGenre = (state: State) => state.genre;
-const selectLoadStatus = (state: State) => state.loadStatus;
+const selectLoadStatusFilms = (state: State) => state.LoadStatus.FILMS;
+const selectLoadStatusFilm = (state: State) => state.LoadStatus.FILM;
 const selectGenres = (state: State) => state.genres;
 
 export const selectFilteredFilms = createSelector(
@@ -17,14 +19,24 @@ export const selectFilteredFilms = createSelector(
   }
 );
 
-export const selectedLoadStatus = createSelector(
-  [selectLoadStatus],
+export const selectedLoadStatusFilms = createSelector(
+  [selectLoadStatusFilms],
+  (loadStatus) => loadStatus
+);
+
+export const selectedLoadStatusFilm = createSelector(
+  [selectLoadStatusFilm],
   (loadStatus) => loadStatus
 );
 
 export const selectedAllFilms = createSelector(
   [selectAllFilms],
   (allFilms) => allFilms
+);
+
+export const selectedFilm = createSelector(
+  [selectFilm],
+  (film) => film
 );
 
 export const selectedGenres = createSelector(

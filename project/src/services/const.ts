@@ -14,5 +14,6 @@ export const ApiRoute = {
 export const LoadStatus = {
   Loading: 'loading',
   Loaded: 'loaded',
-  Fail: 'fail'
+  Fail: 'fail',
+  Unknown: 'unknown'
 } as const;

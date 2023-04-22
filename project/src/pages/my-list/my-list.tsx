@@ -4,7 +4,7 @@ import Logo from '../../components/header/logo';
 import UserBlock from '../../components/header/user-block';
 import {Helmet} from 'react-helmet-async';
 import {useAppSelector} from '../../hooks';
-import {selectedAllFilms} from '../../selectors';
+import {selectedAllFilms} from '../../store/selectors';
 
 function MyList(): JSX.Element {
   const films = useAppSelector(selectedAllFilms);

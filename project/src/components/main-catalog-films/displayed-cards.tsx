@@ -2,23 +2,23 @@ import {useDisplayedCards} from '../../hooks/use-displayed-cards';
 import FilmCards from '../film-cards/film-cards';
 import {CatalogMoreButton} from './catalog-more-button';
 import {useAppSelector} from '../../hooks';
-import {selectedLoadStatus, selectFilteredFilms} from '../../selectors';
+import {selectedLoadStatusFilms, selectFilteredFilms} from '../../store/selectors';
 import {Spinner} from '../spiner/spinner';
 import {LoadStatus} from '../../services/const';
 
 function DisplayedCards(): JSX.Element {
   const filteredFilms = useAppSelector(selectFilteredFilms);
-  const loadStatus = useAppSelector(selectedLoadStatus);
+  const loadStatusFilms = useAppSelector(selectedLoadStatusFilms);
 
   const {displayedCount, showMoreCards} = useDisplayedCards();
   const countDisplayCards = Math.min(displayedCount, filteredFilms.length);
   const buttonIsVisible = displayedCount < filteredFilms.length;
 
-  if (loadStatus === LoadStatus.Loading) {
+  if (loadStatusFilms === LoadStatus.Loading) {
     return <Spinner/>;
   }
 
-  if (loadStatus === LoadStatus.Fail) {
+  if (loadStatusFilms === LoadStatus.Fail) {
     return (
       <div>Error :( Please, reload this page</div>
     );

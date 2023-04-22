@@ -1,1 +1,1 @@
-export type loadStatuses = 'loading' | 'loaded' | 'fail';
+export type LoadStatuses = 'unknown' | 'loading' | 'loaded' | 'fail';

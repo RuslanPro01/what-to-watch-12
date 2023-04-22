@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {convertGenreToRoute} from '../../utils';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre} from '../../store/action';
-import {selectedGenres} from '../../selectors';
+import {selectedGenres} from '../../store/selectors';
 import {Helmet} from 'react-helmet-async';
 
 function CatalogGenresList(): JSX.Element {
