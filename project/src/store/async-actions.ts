@@ -3,8 +3,16 @@ import {AppDispatch} from '../types/store';
 import {State} from '../types/store';
 import {AxiosInstance} from 'axios';
 import {Film, Films} from '../types/films';
-import {changeLoadStatusFilm, changeLoadStatusFilms, loadFilm, loadFilms} from './action';
+import {
+  changeLoadStatusComments,
+  changeLoadStatusFilm,
+  changeLoadStatusFilms,
+  loadComments,
+  loadFilm,
+  loadFilms
+} from './action';
 import {ApiRoute, LoadStatus} from '../services/const';
+import {Comments} from '../types/comments';
 
 type asyncActionsProps = {
   dispatch: AppDispatch;
@@ -29,5 +37,15 @@ export const fetchFilmAction = createAsyncThunk<void, string, asyncActionsProps>
     const {data} = await api.get<Film>(ApiRoute.Film(filmId));
     dispatch(loadFilm(data));
     dispatch(changeLoadStatusFilm(LoadStatus.Loaded));
+  }
+);
+
+export const fetchCommentsAction = createAsyncThunk<void, string, asyncActionsProps> (
+  'data/fetchComments',
+  async (filmId, {dispatch, extra: api}) => {
+    dispatch(changeLoadStatusComments(LoadStatus.Loading));
+    const {data} = await api.get<Comments>(ApiRoute.Comments(filmId));
+    dispatch(loadComments(data));
+    dispatch(changeLoadStatusComments(LoadStatus.Loaded));
   }
 );

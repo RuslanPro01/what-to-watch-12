@@ -7,8 +7,7 @@ import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
 import {useAppSelector} from '../../hooks';
 import {selectedAllFilms, selectedFilm, selectedLoadStatusFilm} from '../../store/selectors';
-import {useEffect, useState} from 'react';
-import {Film} from '../../types/films';
+import {useEffect} from 'react';
 import {LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
 import FilmContext from '../../context/film-context';
@@ -18,23 +17,18 @@ import {store} from '../../store';
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [film, setFilm] = useState<null | Film>(null);
   const loadStatusFilm = useAppSelector(selectedLoadStatusFilm);
-  const selectFilm = useAppSelector(selectedFilm);
+  const film = useAppSelector(selectedFilm);
   const films = useAppSelector(selectedAllFilms);
 
   useEffect(() => {
-    if (loadStatusFilm === LoadStatus.Loaded) {
-      setFilm(selectFilm);
+    if (id) {
+      store.dispatch(fetchFilmAction(id));
     }
-  }, [loadStatusFilm, selectFilm]);
+  }, [id]);
 
   if (!id) {
     return <Navigate to={Path.PageNotFound}/>;
-  }
-
-  if (id && loadStatusFilm === LoadStatus.Unknown) {
-    store.dispatch(fetchFilmAction(id));
   }
 
   const similarFilms = film ? [...films].filter((filmElement) => {
@@ -106,7 +100,14 @@ function MoviePage(): JSX.Element {
               <img src={film?.posterImage} alt={`${film?.name ?? 'No'} poster`} width="218" height="327"/>
             </div>
             <div className="film-card__desc">
-              <NavTab/> <FilmContext.Provider value={film}> <Outlet/> </FilmContext.Provider>
+              <NavTab/>
+              {
+                loadStatusFilm === LoadStatus.Loaded ?
+                  <FilmContext.Provider value={film}>
+                    <Outlet/>
+                  </FilmContext.Provider> :
+                  null
+              }
             </div>
           </div>
         </div>

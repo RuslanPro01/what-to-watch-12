@@ -11,6 +11,7 @@ import {
 import {ALL_GENRES} from '../common-const';
 import {LoadStatuses} from '../types/load-statuses';
 import {LoadStatus} from '../services/const';
+import {Comments} from '../types/comments';
 
 type InitialState = {
   genre: string;
@@ -23,7 +24,7 @@ type InitialState = {
   genres: string[];
   MoviePage: {
     FILM: Film | null;
-    COMMENTS: string[] | null;
+    COMMENTS: Comments | null;
   };
 }
 
