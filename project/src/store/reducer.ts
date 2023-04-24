@@ -1,6 +1,7 @@
 import {Film, Films} from '../types/films';
 import {createReducer} from '@reduxjs/toolkit';
 import {
+  changeAuthorizationStatus,
   changeGenre,
   changeLoadStatusComments,
   changeLoadStatusFilm,
@@ -12,8 +13,13 @@ import {ALL_GENRES} from '../common-const';
 import {LoadStatuses} from '../types/load-statuses';
 import {LoadStatus} from '../services/const';
 import {Comments} from '../types/comments';
+import {AuthorizationStatus} from '../components/private-route/const';
+import {AuthStatuses} from '../types/store';
+import {loginAction} from './async-actions';
 
 type InitialState = {
+  authorizationStatus: AuthStatuses;
+  authorizationError: string | null | unknown;
   genre: string;
   allFilms: Films;
   LoadStatus: {
@@ -30,6 +36,8 @@ type InitialState = {
 
 
 const initialState: InitialState = {
+  authorizationStatus: AuthorizationStatus.Unknown,
+  authorizationError: null,
   genre: ALL_GENRES,
   allFilms: [],
   LoadStatus: {
@@ -56,6 +64,12 @@ function generateUniqueGenres(films: Films) {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase((changeAuthorizationStatus), (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(loginAction.rejected, (state, action) => {
+      state.authorizationError = action.payload;
+    })
     .addCase(changeGenre, (state, action) => {
       state.genre = action.payload;
     })

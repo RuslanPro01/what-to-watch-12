@@ -2,6 +2,8 @@ import {createSelector} from '@reduxjs/toolkit';
 import {State} from '../types/store';
 import {ALL_GENRES} from '../common-const';
 
+const selectAuthStatus = (state: State) => state.authorizationStatus;
+const selectAuthorizationError = (state: State) => state.authorizationError;
 const selectAllFilms = (state: State) => state.allFilms;
 const selectFilm = (state: State) => state.MoviePage.FILM;
 const selectComments = (state: State) => state.MoviePage.COMMENTS;
@@ -10,6 +12,17 @@ const selectLoadStatusFilms = (state: State) => state.LoadStatus.FILMS;
 const selectLoadStatusFilm = (state: State) => state.LoadStatus.FILM;
 const selectLoadStatusComments = (state: State) => state.LoadStatus.COMMENTS;
 const selectGenres = (state: State) => state.genres;
+
+
+export const selectedAuthStatus = createSelector(
+  [selectAuthStatus],
+  (authStatus) => authStatus
+);
+
+export const selectedAuthorizationError = createSelector(
+  [selectAuthorizationError],
+  (authorizationError) => authorizationError
+);
 
 export const selectFilteredFilms = createSelector(
   [selectAllFilms, selectGenre],

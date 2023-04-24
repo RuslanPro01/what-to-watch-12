@@ -1,7 +1,7 @@
 import FilmCards from '../../components/film-cards/film-cards';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/header/logo';
-import UserBlock from '../../components/header/user-block';
+import UserAuthBlock from '../../components/header/user-auth-block';
 import {Helmet} from 'react-helmet-async';
 import {useAppSelector} from '../../hooks';
 import {selectedAllFilms} from '../../store/selectors';
@@ -17,7 +17,7 @@ function MyList(): JSX.Element {
       <header className="page-header user-page__head">
         <Logo/>
         <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{favoriteFilms.length}</span></h1>
-        <UserBlock/>
+        <UserAuthBlock/>
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>

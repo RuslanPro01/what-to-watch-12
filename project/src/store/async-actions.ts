@@ -4,6 +4,7 @@ import {State} from '../types/store';
 import {AxiosInstance} from 'axios';
 import {Film, Films} from '../types/films';
 import {
+  changeAuthorizationStatus,
   changeLoadStatusComments,
   changeLoadStatusFilm,
   changeLoadStatusFilms,
@@ -13,6 +14,9 @@ import {
 } from './action';
 import {ApiRoute, LoadStatus} from '../services/const';
 import {Comments} from '../types/comments';
+import {AuthorizationStatus} from '../components/private-route/const';
+import {AuthUserData, User} from '../types/user';
+import {saveToken} from '../services/token';
 
 type asyncActionsProps = {
   dispatch: AppDispatch;
@@ -48,4 +52,25 @@ export const fetchCommentsAction = createAsyncThunk<void, string, asyncActionsPr
     dispatch(loadComments(data));
     dispatch(changeLoadStatusComments(LoadStatus.Loaded));
   }
+);
+
+export const checkAuthStatus = createAsyncThunk<void, undefined, asyncActionsProps> (
+  'user/checkAuthStatus',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      await api.get(ApiRoute.Login);
+      dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
+    }
+  }
+);
+
+export const loginAction = createAsyncThunk<void, AuthUserData, asyncActionsProps>(
+  'user/login',
+  async ({email, password}, {dispatch, extra: api}) => {
+    const {data: {token}} = await api.post<User>(ApiRoute.Login, {email, password});
+    saveToken(token);
+    dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
+  },
 );

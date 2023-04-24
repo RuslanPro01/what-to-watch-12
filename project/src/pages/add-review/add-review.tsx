@@ -1,5 +1,5 @@
 import Logo from '../../components/header/logo';
-import UserBlock from '../../components/header/user-block';
+import UserAuthBlock from '../../components/header/user-auth-block';
 import {Link} from 'react-router-dom';
 import {Path} from '../../common-const';
 import {useParams} from 'react-router-dom';
@@ -34,7 +34,7 @@ function AddReview(): JSX.Element {
               </li>
             </ul>
           </nav>
-          <UserBlock/>
+          <UserAuthBlock/>
         </header>
         <div className="film-card__poster film-card__poster--small">
           <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218"

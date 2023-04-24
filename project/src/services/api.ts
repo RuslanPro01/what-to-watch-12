@@ -1,8 +1,13 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {toast} from 'react-toastify';
 import {ApiRoute, LoadStatus, StatusCodeMapping} from './const';
-import {changeLoadStatusComments, changeLoadStatusFilm, changeLoadStatusFilms} from '../store/action';
+import {
+  changeLoadStatusComments,
+  changeLoadStatusFilm,
+  changeLoadStatusFilms
+} from '../store/action';
 import {store} from '../store';
+import {getToken} from './token';
 
 const BASE_URL = 'https://12.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
@@ -14,6 +19,18 @@ export const createApi = () => {
     baseURL: BASE_URL,
     timeout: REQUEST_TIMEOUT
   });
+
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const token = getToken();
+
+      if (token && config.headers) {
+        config.headers['x-token'] = token;
+      }
+
+      return config;
+    }
+  );
 
   api.interceptors.response.use(
     (response) => response,
