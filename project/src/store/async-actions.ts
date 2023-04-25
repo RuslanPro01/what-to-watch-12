@@ -7,7 +7,7 @@ import {
   changeAuthorizationStatus,
   changeLoadStatusComments,
   changeLoadStatusFilm,
-  changeLoadStatusFilms,
+  changeLoadStatusFilms, changePostCommentStatus,
   loadComments,
   loadFilm,
   loadFilms
@@ -17,6 +17,7 @@ import {Comments} from '../types/comments';
 import {AuthorizationStatus} from '../components/private-route/const';
 import {AuthUserData, User} from '../types/user';
 import {saveToken} from '../services/token';
+import {userComment} from '../types/user-cooment';
 
 type asyncActionsProps = {
   dispatch: AppDispatch;
@@ -74,3 +75,14 @@ export const loginAction = createAsyncThunk<void, AuthUserData, asyncActionsProp
     dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
   },
 );
+
+export const postUserCommentAction = createAsyncThunk<void, userComment, asyncActionsProps> (
+  'user/postComment',
+  async ({comment, rating, filmId}, {dispatch, extra: api}) => {
+    dispatch(changePostCommentStatus(LoadStatus.Loading));
+    const {data} = await api.post<Comments>(ApiRoute.Comments(filmId), {comment, rating});
+    dispatch(loadComments(data));
+    dispatch(changePostCommentStatus(LoadStatus.Loaded));
+  }
+);
+

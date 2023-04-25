@@ -12,4 +12,4 @@ export const changeLoadStatusFilms = createAction<LoadStatuses>('api/changeLoadS
 export const changeLoadStatusFilm = createAction<LoadStatuses>('api/changeLoadStatusFilm');
 export const changeLoadStatusComments = createAction<LoadStatuses>('api/changeLoadStatusComments');
 export const changeAuthorizationStatus = createAction<AuthStatuses>('user/checkAuth');
-export const setAuthorizationError = createAction<string>('user/setAuthorizationError');
+export const changePostCommentStatus = createAction<LoadStatuses>('user/changePostCommentStatus');
