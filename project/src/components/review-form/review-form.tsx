@@ -1,7 +1,11 @@
 import {useState, MouseEvent, ChangeEvent} from 'react';
 import {ratings, baseRatingValue} from './const';
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  color: string;
+}
+
+function ReviewForm({color}: ReviewFormProps): JSX.Element {
   type TypeReviewData = {
     checkedValue: number;
     reviewText: string;
@@ -62,7 +66,7 @@ function ReviewForm(): JSX.Element {
             }
           </div>
         </div>
-        <div className="add-review__text">
+        <div className="add-review__text" style={{backgroundColor: color}}>
           <textarea
             className="add-review__textarea"
             name="review-text"

@@ -1,18 +1,21 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import {Link, Navigate, Outlet, useNavigate, useParams} from 'react-router-dom';
+import {Navigate, Outlet, useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
 import NavTab from './nav-tab';
 import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
 import {useAppSelector} from '../../hooks';
-import {selectedAllFilms, selectedFilm, selectedLoadStatusFilm} from '../../store/selectors';
+import {selectedAllFilms, selectedAuthStatus, selectedFilm, selectedLoadStatusFilm} from '../../store/selectors';
 import {useEffect} from 'react';
 import {LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
 import FilmContext from '../../context/film-context';
 import {fetchFilmAction} from '../../store/async-actions';
 import {store} from '../../store';
+import {AuthorizationStatus} from '../../components/private-route/const';
+import {MyListButton} from './my-list-button';
+import {AddReviewButton} from './add-review-button';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
@@ -20,6 +23,7 @@ function MoviePage(): JSX.Element {
   const loadStatusFilm = useAppSelector(selectedLoadStatusFilm);
   const film = useAppSelector(selectedFilm);
   const films = useAppSelector(selectedAllFilms);
+  const authStatus = useAppSelector(selectedAuthStatus);
 
   useEffect(() => {
     if (id) {
@@ -82,14 +86,8 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-                <Link to={Path.FilmsPages.Review} className="btn film-card__button">Add review</Link>
+                <MyListButton/>
+                {authStatus === AuthorizationStatus.Auth ? <AddReviewButton/> : null}
               </div>
             </div>
           </div>
