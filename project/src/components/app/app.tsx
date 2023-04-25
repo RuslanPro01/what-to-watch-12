@@ -8,12 +8,13 @@ import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import {Path} from '../../common-const';
 import PrivateRoute from '../private-route/private-route';
-import {AuthorizationStatus} from '../private-route/const';
 import MyList from '../../pages/my-list/my-list';
 import OverviewTab from '../../pages/movie-page/overview-tab';
 import DetailsTab from '../../pages/movie-page/details-tab';
 import ReviewTab from '../../pages/movie-page/review-tab';
 import DisplayedCards from '../main-catalog-films/displayed-cards';
+import {useAppSelector} from '../../hooks';
+import {selectedAuthStatus} from '../../store/selectors';
 
 const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 
@@ -24,6 +25,7 @@ type AppProps = {
 }
 
 function App({filmName, yearFilm, filmGenre}: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector(selectedAuthStatus);
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -40,7 +42,7 @@ function App({filmName, yearFilm, filmGenre}: AppProps): JSX.Element {
           <Route path={`${FilmsPages.MainPage}/${FilmsPages.Review}`} element={<AddReview/>}/>
           <Route path={PlayerPage} element={<Player/>}/>
           <Route path={MyListPage} element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <MyList/>
             </PrivateRoute>
           }

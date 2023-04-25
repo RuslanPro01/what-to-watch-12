@@ -1,8 +1,13 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {toast} from 'react-toastify';
-import {LoadStatus, StatusCodeMapping} from './const';
-import {changeLoadStatus} from '../store/action';
+import {ApiRoute, LoadStatus, StatusCodeMapping} from './const';
+import {
+  changeLoadStatusComments,
+  changeLoadStatusFilm,
+  changeLoadStatusFilms
+} from '../store/action';
 import {store} from '../store';
+import {getToken} from './token';
 
 const BASE_URL = 'https://12.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
@@ -15,12 +20,39 @@ export const createApi = () => {
     timeout: REQUEST_TIMEOUT
   });
 
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const token = getToken();
+
+      if (token && config.headers) {
+        config.headers['x-token'] = token;
+      }
+
+      return config;
+    }
+  );
+
   api.interceptors.response.use(
-    (responce) => responce,
+    (response) => response,
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
         toast.error(error.response.data.error);
-        store.dispatch(changeLoadStatus(LoadStatus.Fail));
+        const urlAddress = error.response.config.url;
+        if (urlAddress) {
+          const isFilmsRouteError = urlAddress.includes(ApiRoute.Films);
+          const isFilmRouteError = urlAddress.includes(ApiRoute.Film('')) && +urlAddress[urlAddress.length - 1] >= 0;
+          const isCommentsRouteError = urlAddress.includes(ApiRoute.Comments('')) && +urlAddress[urlAddress.length - 1] >= 0;
+
+          if (isFilmsRouteError) {
+            store.dispatch(changeLoadStatusFilms(LoadStatus.Fail));
+          }
+          if (isFilmRouteError) {
+            store.dispatch(changeLoadStatusFilm(LoadStatus.Fail));
+          }
+          if (isCommentsRouteError) {
+            store.dispatch(changeLoadStatusComments(LoadStatus.Fail));
+          }
+        }
       }
       throw Error;
     }

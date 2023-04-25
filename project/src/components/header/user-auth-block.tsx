@@ -1,4 +1,4 @@
-function UserBlock(): JSX.Element {
+function UserAuthBlock(): JSX.Element {
   return (
     <ul className="user-block">
       <li className="user-block__item">
@@ -13,4 +13,4 @@ function UserBlock(): JSX.Element {
   );
 }
 
-export default UserBlock;
+export default UserAuthBlock;

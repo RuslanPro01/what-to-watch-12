@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
-import {fetchFilmsAction} from './store/async-actions';
+import {checkAuthStatus, fetchFilmsAction} from './store/async-actions';
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from 'react-toastify';
 
@@ -18,6 +18,7 @@ const root = ReactDOM.createRoot(
 );
 
 store.dispatch(fetchFilmsAction());
+store.dispatch(checkAuthStatus());
 
 root.render(
   <React.StrictMode>

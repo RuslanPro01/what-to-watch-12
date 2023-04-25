@@ -6,43 +6,29 @@ import NavTab from './nav-tab';
 import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
 import {useAppSelector} from '../../hooks';
-import {selectedAllFilms} from '../../selectors';
-import {useEffect, useState} from 'react';
-import {loadStatuses} from '../../types/load-statuses';
-import {Film} from '../../types/films';
-import {ApiRoute, LoadStatus} from '../../services/const';
+import {selectedAllFilms, selectedFilm, selectedLoadStatusFilm} from '../../store/selectors';
+import {useEffect} from 'react';
+import {LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
-import {api} from '../../store';
 import FilmContext from '../../context/film-context';
+import {fetchFilmAction} from '../../store/async-actions';
+import {store} from '../../store';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [loadStatus, setLoadStatus] = useState<loadStatuses>(LoadStatus.Loading);
-  const [film, setFilm] = useState<null | Film>(null);
+  const loadStatusFilm = useAppSelector(selectedLoadStatusFilm);
+  const film = useAppSelector(selectedFilm);
+  const films = useAppSelector(selectedAllFilms);
+
   useEffect(() => {
-    const loadFilm = async () => {
-      try {
-        if (id) {
-          const {data} = await api.get<Film>(ApiRoute.Film(id));
-          setFilm(data);
-          setLoadStatus(LoadStatus.Loaded);
-        }
-      }
-      catch (e) {
-        setLoadStatus(LoadStatus.Fail);
-      }
-    };
-    loadFilm();
+    if (id) {
+      store.dispatch(fetchFilmAction(id));
+    }
   }, [id]);
 
-  const films = useAppSelector(selectedAllFilms);
   if (!id) {
-    return <Navigate to={Path.PageNotFound} />;
-  }
-
-  if (loadStatus === LoadStatus.Loaded && !film) {
-    return <Navigate to={Path.PageNotFound} />;
+    return <Navigate to={Path.PageNotFound}/>;
   }
 
   const similarFilms = film ? [...films].filter((filmElement) => {
@@ -52,12 +38,20 @@ function MoviePage(): JSX.Element {
     return filmElement.genre === film.genre;
   }) : [];
 
-  if (loadStatus === LoadStatus.Loading) {
-    return <Spinner />;
+  if (loadStatusFilm === LoadStatus.Loading || loadStatusFilm === LoadStatus.Unknown) {
+    return (
+      <section className="film-card film-card--full">
+        <Spinner/>;
+      </section>
+    );
   }
 
-  if (loadStatus === LoadStatus.Fail) {
-    return <div>Error :( Please, reload this page</div>;
+  if (loadStatusFilm === LoadStatus.Fail) {
+    return (
+      <section className="film-card film-card--full">
+        <div>Error :( Please, reload this page</div>
+      </section>
+    );
   }
 
   return (
@@ -80,7 +74,7 @@ function MoviePage(): JSX.Element {
               <div className="film-card__buttons">
                 <button
                   className="btn btn--play film-card__button" type="button" onClick={() => {
-                    navigate(`${Path.PlayerPage.replace(':id', id )}`);
+                    navigate(`${Path.PlayerPage.replace(':id', id)}`);
                   }}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
@@ -107,9 +101,13 @@ function MoviePage(): JSX.Element {
             </div>
             <div className="film-card__desc">
               <NavTab/>
-              <FilmContext.Provider value={film}>
-                <Outlet/>
-              </FilmContext.Provider>
+              {
+                loadStatusFilm === LoadStatus.Loaded ?
+                  <FilmContext.Provider value={film}>
+                    <Outlet/>
+                  </FilmContext.Provider> :
+                  null
+              }
             </div>
           </div>
         </div>
