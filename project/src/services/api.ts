@@ -4,7 +4,7 @@ import {ApiRoute, LoadStatus, StatusCodeMapping} from './const';
 import {
   changeLoadStatusComments,
   changeLoadStatusFilm,
-  changeLoadStatusFilms
+  changeLoadStatusFilms, changePostCommentStatus,
 } from '../store/action';
 import {store} from '../store';
 import {getToken} from './token';
@@ -38,7 +38,9 @@ export const createApi = () => {
       if (error.response && shouldDisplayError(error.response)) {
         toast.error(error.response.data.error);
         const urlAddress = error.response.config.url;
-        if (urlAddress) {
+        const requestMethod = error.response.config.method;
+
+        if (urlAddress && requestMethod) {
           const isFilmsRouteError = urlAddress.includes(ApiRoute.Films);
           const isFilmRouteError = urlAddress.includes(ApiRoute.Film('')) && +urlAddress[urlAddress.length - 1] >= 0;
           const isCommentsRouteError = urlAddress.includes(ApiRoute.Comments('')) && +urlAddress[urlAddress.length - 1] >= 0;
@@ -50,13 +52,18 @@ export const createApi = () => {
             store.dispatch(changeLoadStatusFilm(LoadStatus.Fail));
           }
           if (isCommentsRouteError) {
-            store.dispatch(changeLoadStatusComments(LoadStatus.Fail));
+            if (requestMethod === 'post') {
+              store.dispatch(changePostCommentStatus(LoadStatus.Fail));
+            } else {
+              store.dispatch(changeLoadStatusComments(LoadStatus.Fail));
+            }
           }
         }
       }
-      throw Error;
+      throw error;
     }
   );
+
 
   return api;
 };

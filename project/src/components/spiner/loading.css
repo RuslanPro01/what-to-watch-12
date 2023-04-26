@@ -10,8 +10,18 @@
   }
 }
 
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .spinner {
   display: inline-block;
+  font-size: 1em;
+  color: #333;
   animation: loadingSpinner 1.5s infinite;
 }
 

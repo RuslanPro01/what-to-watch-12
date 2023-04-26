@@ -11,6 +11,7 @@ const selectGenre = (state: State) => state.genre;
 const selectLoadStatusFilms = (state: State) => state.LoadStatus.FILMS;
 const selectLoadStatusFilm = (state: State) => state.LoadStatus.FILM;
 const selectLoadStatusComments = (state: State) => state.LoadStatus.COMMENTS;
+const selectPostStatusComment = (state: State) => state.LoadStatus.POST_COMMENT;
 const selectGenres = (state: State) => state.genres;
 
 
@@ -47,6 +48,11 @@ export const selectedLoadStatusFilm = createSelector(
 export const selectedLoadStatusComments = createSelector(
   [selectLoadStatusComments],
   (loadStatusComments) => loadStatusComments
+);
+
+export const selectedPostStatusComment = createSelector(
+  [selectPostStatusComment],
+  (postStatusComment) => postStatusComment
 );
 
 export const selectedAllFilms = createSelector(

@@ -5,7 +5,9 @@ import {
   changeGenre,
   changeLoadStatusComments,
   changeLoadStatusFilm,
-  changeLoadStatusFilms, loadComments,
+  changeLoadStatusFilms,
+  changePostCommentStatus,
+  loadComments,
   loadFilm,
   loadFilms
 } from './action';
@@ -26,6 +28,7 @@ type InitialState = {
     FILMS: LoadStatuses;
     FILM: LoadStatuses;
     COMMENTS: LoadStatuses;
+    POST_COMMENT: LoadStatuses;
   };
   genres: string[];
   MoviePage: {
@@ -43,7 +46,8 @@ const initialState: InitialState = {
   LoadStatus: {
     FILMS: LoadStatus.Unknown,
     FILM: LoadStatus.Unknown,
-    COMMENTS: LoadStatus.Unknown
+    COMMENTS: LoadStatus.Unknown,
+    POST_COMMENT: LoadStatus.Unknown
   },
   genres: [ALL_GENRES],
   MoviePage: {
@@ -91,6 +95,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeLoadStatusComments, (state, action) => {
       state.LoadStatus.COMMENTS = action.payload;
+    })
+    .addCase(changePostCommentStatus, (state, action) => {
+      state.LoadStatus.POST_COMMENT = action.payload;
     });
 });
 
