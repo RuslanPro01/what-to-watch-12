@@ -5,14 +5,16 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre} from '../../store/action';
 import {selectedGenres} from '../../store/selectors';
 import {Helmet} from 'react-helmet-async';
+import {useCallback} from 'react';
 
 function CatalogGenresList(): JSX.Element {
   const chosenGenre = useAppSelector((state) => state.genre);
   const uniqGenres = useAppSelector(selectedGenres);
   const dispatch = useAppDispatch();
-  const handleGenreLink = (genre: string) => {
+
+  const handleGenreLink = useCallback((genre: string) => {
     dispatch(changeGenre(genre));
-  };
+  }, [dispatch]);
 
   return (
     <ul className="catalog__genres-list">

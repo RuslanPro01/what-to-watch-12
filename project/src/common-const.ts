@@ -20,3 +20,9 @@ export const Path = {
 
 export const TIME_OUT_ACTIVE_VIDEO = 1000;
 export const ALL_GENRES = 'All Genres';
+
+export const NameSpace = {
+  User: 'USER',
+  Api: 'API',
+  Main: 'MAIN'
+} as const;

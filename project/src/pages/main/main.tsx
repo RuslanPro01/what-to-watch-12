@@ -1,6 +1,7 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import MainCatalogFilms from '../../components/main-catalog-films/main-catalog-films';
+import { memo } from 'react';
 
 type MainProps = {
   filmName: string;
@@ -54,4 +55,4 @@ function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default memo(Main);
