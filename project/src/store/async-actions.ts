@@ -38,20 +38,28 @@ export const fetchCommentsAction = createAsyncThunk<Comments, string, asyncActio
   }
 );
 
-export const checkAuthStatus = createAsyncThunk<void, undefined, asyncActionsProps> (
+export const checkAuthStatus = createAsyncThunk<User, undefined, asyncActionsProps> (
   'user/checkAuthStatus',
   async (_arg, {extra: api}) => {
-    await api.get(ApiRoute.Login);
+    const {data} = await api.get<User>(ApiRoute.Login);
+    return data;
   }
 );
 
-export const loginAction = createAsyncThunk<User, AuthUserData, asyncActionsProps>(
+export const loginAction = createAsyncThunk<User, AuthUserData, asyncActionsProps> (
   'user/login',
   async ({email, password}, {extra: api}) => {
     const {data} = await api.post<User>(ApiRoute.Login, {email, password});
     saveToken(data.token);
     return data;
   },
+);
+
+export const logOutAction = createAsyncThunk<void, undefined, asyncActionsProps> (
+  'user/logOut',
+  async (user, {extra: api}) => {
+    await api.delete<User>(ApiRoute.LogOut, user);
+  }
 );
 
 export const postUserCommentAction = createAsyncThunk<Comments, userComment, asyncActionsProps> (

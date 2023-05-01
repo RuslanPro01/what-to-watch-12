@@ -9,7 +9,8 @@ export const ApiRoute = {
   Films: '/films',
   Film: (id: string) => `/films/${id}`,
   Comments: (id: string) => `/comments/${id}`,
-  Login: '/login'
+  Login: '/login',
+  LogOut: '/logout'
 };
 
 export const LoadStatus = {
