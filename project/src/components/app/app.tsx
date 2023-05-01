@@ -14,7 +14,7 @@ import DetailsTab from '../../pages/movie-page/details-tab';
 import ReviewTab from '../../pages/movie-page/review-tab';
 import DisplayedCards from '../main-catalog-films/displayed-cards';
 import {useAppSelector} from '../../hooks';
-import {selectedAuthStatus} from '../../store/selectors';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
 
 const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 

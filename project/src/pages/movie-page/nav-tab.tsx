@@ -1,4 +1,4 @@
-import {Navigate, useParams, Link, useLocation} from 'react-router-dom';
+import {Link, Navigate, useLocation, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
 
 function NavTab(): JSX.Element {

@@ -1,20 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch} from '../types/store';
-import {State} from '../types/store';
+import {AppDispatch, State} from '../types/store';
 import {AxiosInstance} from 'axios';
 import {Film, Films} from '../types/films';
-import {
-  changeAuthorizationStatus,
-  changeLoadStatusComments,
-  changeLoadStatusFilm,
-  changeLoadStatusFilms, changePostCommentStatus,
-  loadComments,
-  loadFilm,
-  loadFilms
-} from './action';
-import {ApiRoute, LoadStatus} from '../services/const';
+import {ApiRoute} from '../services/const';
 import {Comments} from '../types/comments';
-import {AuthorizationStatus} from '../components/private-route/const';
 import {AuthUserData, User} from '../types/user';
 import {saveToken} from '../services/token';
 import {userComment} from '../types/user-cooment';
@@ -25,64 +14,51 @@ type asyncActionsProps = {
   extra: AxiosInstance;
 }
 
-export const fetchFilmsAction = createAsyncThunk<void, undefined, asyncActionsProps> (
+export const fetchFilmsAction = createAsyncThunk<Films, undefined, asyncActionsProps> (
   'data/fetchFilms',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(changeLoadStatusFilms(LoadStatus.Loading));
+  async (_arg, {extra: api}) => {
     const {data} = await api.get<Films>(ApiRoute.Films);
-    dispatch(loadFilms(data));
-    dispatch(changeLoadStatusFilms(LoadStatus.Loaded));
+    return data;
   }
 );
 
-export const fetchFilmAction = createAsyncThunk<void, string, asyncActionsProps> (
+export const fetchFilmAction = createAsyncThunk<Film, string, asyncActionsProps> (
   'data/fetchFilm',
-  async (filmId, {dispatch, extra: api}) => {
-    dispatch(changeLoadStatusFilm(LoadStatus.Loading));
+  async (filmId, {extra: api}) => {
     const {data} = await api.get<Film>(ApiRoute.Film(filmId));
-    dispatch(loadFilm(data));
-    dispatch(changeLoadStatusFilm(LoadStatus.Loaded));
+    return data;
   }
 );
 
-export const fetchCommentsAction = createAsyncThunk<void, string, asyncActionsProps> (
+export const fetchCommentsAction = createAsyncThunk<Comments, string, asyncActionsProps> (
   'data/fetchComments',
-  async (filmId, {dispatch, extra: api}) => {
-    dispatch(changeLoadStatusComments(LoadStatus.Loading));
+  async (filmId, {extra: api}) => {
     const {data} = await api.get<Comments>(ApiRoute.Comments(filmId));
-    dispatch(loadComments(data));
-    dispatch(changeLoadStatusComments(LoadStatus.Loaded));
+    return data;
   }
 );
 
 export const checkAuthStatus = createAsyncThunk<void, undefined, asyncActionsProps> (
   'user/checkAuthStatus',
-  async (_arg, {dispatch, extra: api}) => {
-    try {
-      await api.get(ApiRoute.Login);
-      dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, {extra: api}) => {
+    await api.get(ApiRoute.Login);
   }
 );
 
-export const loginAction = createAsyncThunk<void, AuthUserData, asyncActionsProps>(
+export const loginAction = createAsyncThunk<User, AuthUserData, asyncActionsProps>(
   'user/login',
-  async ({email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<User>(ApiRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
+  async ({email, password}, {extra: api}) => {
+    const {data} = await api.post<User>(ApiRoute.Login, {email, password});
+    saveToken(data.token);
+    return data;
   },
 );
 
-export const postUserCommentAction = createAsyncThunk<void, userComment, asyncActionsProps> (
-  'user/postComment',
-  async ({comment, rating, filmId}, {dispatch, extra: api}) => {
-    dispatch(changePostCommentStatus(LoadStatus.Loading));
+export const postUserCommentAction = createAsyncThunk<Comments, userComment, asyncActionsProps> (
+  'api/postComment',
+  async ({comment, rating, filmId}, {extra: api}) => {
     const {data} = await api.post<Comments>(ApiRoute.Comments(filmId), {comment, rating});
-    dispatch(loadComments(data));
-    dispatch(changePostCommentStatus(LoadStatus.Loaded));
+    return data;
   }
 );
 

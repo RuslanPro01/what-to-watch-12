@@ -2,10 +2,10 @@ import CatalogGenresList from './catalog-genres-list';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 import {memo, useEffect, useLayoutEffect, useMemo} from 'react';
 import {capitalizeRouteGenre, convertGenreToRoute} from '../../utils';
-import {changeGenre} from '../../store/action';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ALL_GENRES} from '../../common-const';
-import {selectedGenres} from '../../store/selectors';
+import {selectedGenres} from '../../store/api-process/selectors';
+import {changeGenre} from '../../store/api-process/api-process';
 
 function MainCatalogFilms(): JSX.Element {
   const {pathGenre} = useParams();

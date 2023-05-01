@@ -1,29 +1,22 @@
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/header/logo';
 import {Helmet} from 'react-helmet-async';
-import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import {loginAction} from '../../store/async-actions';
 import {AuthUserData} from '../../types/user';
 import {store} from '../../store';
 import {toast} from 'react-toastify';
 import {useAppSelector} from '../../hooks';
-import {selectedAuthorizationError, selectedAuthStatus} from '../../store/selectors';
 import {useNavigate} from 'react-router-dom';
 import {AuthorizationStatus} from '../../components/private-route/const';
 import {Path} from '../../common-const';
-import {SignInMessage} from './sign-in-message';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
 
 function SignIn(): JSX.Element {
   const [emailInputValue, setEmailInputValue] = useState<string>('');
   const [passwordInputValue, setPasswordInputValue] = useState<string>('');
-  const [errorLogin, setErrorLogin] = useState<string | null | unknown>(null);
   const authStatus = useAppSelector(selectedAuthStatus);
   const navigate = useNavigate();
-  const authorizationError = useAppSelector(selectedAuthorizationError);
-
-  useEffect(() => {
-    setErrorLogin(authorizationError);
-  }, [authorizationError]);
 
   if (authStatus === AuthorizationStatus.Auth) {
     navigate(Path.MainPage.initial);
@@ -71,9 +64,6 @@ function SignIn(): JSX.Element {
       </header>
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
-          {
-            errorLogin ? <SignInMessage massage={errorLogin}/> : null
-          }
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input className="sign-in__input"

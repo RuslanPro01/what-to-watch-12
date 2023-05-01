@@ -1,29 +1,16 @@
+import {State} from '../../types/store';
+import {ALL_GENRES, NameSpace} from '../../common-const';
 import {createSelector} from '@reduxjs/toolkit';
-import {State} from '../types/store';
-import {ALL_GENRES} from '../common-const';
 
-const selectAuthStatus = (state: State) => state.authorizationStatus;
-const selectAuthorizationError = (state: State) => state.authorizationError;
-const selectAllFilms = (state: State) => state.allFilms;
-const selectFilm = (state: State) => state.MoviePage.FILM;
-const selectComments = (state: State) => state.MoviePage.COMMENTS;
-const selectGenre = (state: State) => state.genre;
-const selectLoadStatusFilms = (state: State) => state.LoadStatus.FILMS;
-const selectLoadStatusFilm = (state: State) => state.LoadStatus.FILM;
-const selectLoadStatusComments = (state: State) => state.LoadStatus.COMMENTS;
-const selectPostStatusComment = (state: State) => state.LoadStatus.POST_COMMENT;
-const selectGenres = (state: State) => state.genres;
-
-
-export const selectedAuthStatus = createSelector(
-  [selectAuthStatus],
-  (authStatus) => authStatus
-);
-
-export const selectedAuthorizationError = createSelector(
-  [selectAuthorizationError],
-  (authorizationError) => authorizationError
-);
+const selectAllFilms = (state: State) => state[NameSpace.Api].allFilms;
+const selectFilm = (state: State) => state[NameSpace.Api].MoviePage.Film;
+const selectComments = (state: State) => state[NameSpace.Api].MoviePage.Comments;
+const selectGenre = (state: State) => state[NameSpace.Api].genre;
+const selectLoadStatusFilms = (state: State) => state[NameSpace.Api].LoadStatus.Films;
+const selectLoadStatusFilm = (state: State) => state[NameSpace.Api].LoadStatus.Film;
+const selectLoadStatusComments = (state: State) => state[NameSpace.Api].LoadStatus.Comments;
+const selectPostStatusComment = (state: State) => state[NameSpace.Api].LoadStatus.PostComment;
+const selectGenres = (state: State) => state[NameSpace.Api].genres;
 
 export const selectFilteredFilms = createSelector(
   [selectAllFilms, selectGenre],
@@ -68,6 +55,11 @@ export const selectedFilm = createSelector(
 export const selectedComments = createSelector(
   [selectComments],
   (comments) => comments
+);
+
+export const selectedGenre = createSelector(
+  [selectGenre],
+  (genre) => genre
 );
 
 export const selectedGenres = createSelector(

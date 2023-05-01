@@ -1,9 +1,9 @@
 import UserAuthBlock from './user-auth-block';
 import Logo from './logo';
 import {useAppSelector} from '../../hooks';
-import {selectedAuthStatus} from '../../store/selectors';
 import {AuthorizationStatus} from '../private-route/const';
 import UserUnAuthBlock from './user-unauth-block';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
 
 export function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(selectedAuthStatus);

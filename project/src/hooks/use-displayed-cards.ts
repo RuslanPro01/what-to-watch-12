@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { INCREMENTOR_DISPLAYED_CARDS, INITIAL_DISPLAYED_CARDS } from './const';
+import {INCREMENTOR_DISPLAYED_CARDS, INITIAL_DISPLAYED_CARDS} from './const';
 import {useLocation} from 'react-router-dom';
 
 export function useDisplayedCards() {

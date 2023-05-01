@@ -2,9 +2,9 @@ import {useDisplayedCards} from '../../hooks/use-displayed-cards';
 import FilmCards from '../film-cards/film-cards';
 import {CatalogMoreButton} from './catalog-more-button';
 import {useAppSelector} from '../../hooks';
-import {selectedLoadStatusFilms, selectFilteredFilms} from '../../store/selectors';
 import {Spinner} from '../spiner/spinner';
 import {LoadStatus} from '../../services/const';
+import {selectedLoadStatusFilms, selectFilteredFilms} from '../../store/api-process/selectors';
 
 function DisplayedCards(): JSX.Element {
   const filteredFilms = useAppSelector(selectFilteredFilms);

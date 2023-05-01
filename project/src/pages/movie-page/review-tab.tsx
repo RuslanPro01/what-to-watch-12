@@ -6,10 +6,10 @@ import {useParams} from 'react-router-dom';
 import {fetchCommentsAction} from '../../store/async-actions';
 import {store} from '../../store';
 import {useAppSelector} from '../../hooks';
-import {selectedComments, selectedLoadStatusComments} from '../../store/selectors';
 import {LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
 import {Reviews} from '../../components/reviews/reviews';
+import {selectedComments, selectedLoadStatusComments} from '../../store/api-process/selectors';
 
 function ReviewTab(): JSX.Element {
   const film = useContext(FilmContext);

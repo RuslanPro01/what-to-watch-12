@@ -6,7 +6,6 @@ import NavTab from './nav-tab';
 import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
 import {useAppSelector} from '../../hooks';
-import {selectedAllFilms, selectedAuthStatus, selectedFilm, selectedLoadStatusFilm} from '../../store/selectors';
 import {useEffect} from 'react';
 import {LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
@@ -16,6 +15,8 @@ import {store} from '../../store';
 import {AuthorizationStatus} from '../../components/private-route/const';
 import {MyListButton} from './my-list-button';
 import {AddReviewButton} from './add-review-button';
+import {selectedAllFilms, selectedFilm, selectedLoadStatusFilm} from '../../store/api-process/selectors';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
