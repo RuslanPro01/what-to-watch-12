@@ -4,6 +4,8 @@ import {createSelector} from '@reduxjs/toolkit';
 
 const selectAllFilms = (state: State) => state[NameSpace.Api].allFilms;
 const selectFilm = (state: State) => state[NameSpace.Api].MoviePage.Film;
+const selectSimilarFilms = (state: State) => state[NameSpace.Api].MoviePage.SimilarFilms;
+const selectStatusLoadSimilarFilms = (state: State) => state[NameSpace.Api].LoadStatus.SimilarFilms;
 const selectComments = (state: State) => state[NameSpace.Api].MoviePage.Comments;
 const selectGenre = (state: State) => state[NameSpace.Api].genre;
 const selectLoadStatusFilms = (state: State) => state[NameSpace.Api].LoadStatus.Films;
@@ -50,6 +52,16 @@ export const selectedAllFilms = createSelector(
 export const selectedFilm = createSelector(
   [selectFilm],
   (film) => film
+);
+
+export const selectedSimilarFilms = createSelector(
+  [selectSimilarFilms],
+  (similarFilms) => similarFilms
+);
+
+export const selectedStatusLoadSimilarFilms = createSelector(
+  [selectStatusLoadSimilarFilms],
+  (status) => status
 );
 
 export const selectedComments = createSelector(

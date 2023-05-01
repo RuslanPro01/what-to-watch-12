@@ -20,6 +20,7 @@ export type ApiProcess = {
   allFilms: Films;
   LoadStatus: {
     Films: LoadStatuses;
+    SimilarFilms: LoadStatuses;
     Film: LoadStatuses;
     Comments: LoadStatuses;
     PostComment: LoadStatuses;
@@ -27,6 +28,7 @@ export type ApiProcess = {
   genres: string[];
   MoviePage: {
     Film: Film | null;
+    SimilarFilms: Films | null;
     Comments: Comments | null;
   };
 }

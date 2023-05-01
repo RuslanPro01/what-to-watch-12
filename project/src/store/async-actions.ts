@@ -22,6 +22,14 @@ export const fetchFilmsAction = createAsyncThunk<Films, undefined, asyncActionsP
   }
 );
 
+export const fetchSimilarFilmsAction = createAsyncThunk<Films, string, asyncActionsProps> (
+  'data/fetchSimilarFilms',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<Films>(ApiRoute.SimilarFilms(id));
+    return data;
+  }
+);
+
 export const fetchFilmAction = createAsyncThunk<Film, string, asyncActionsProps> (
   'data/fetchFilm',
   async (filmId, {extra: api}) => {

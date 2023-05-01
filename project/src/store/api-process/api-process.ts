@@ -2,14 +2,22 @@ import {ApiProcess} from '../../types/store';
 import {ALL_GENRES, NameSpace} from '../../common-const';
 import {LoadStatus} from '../../services/const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {fetchCommentsAction, fetchFilmAction, fetchFilmsAction, postUserCommentAction} from '../async-actions';
+import {
+  fetchCommentsAction,
+  fetchFilmAction,
+  fetchFilmsAction,
+  fetchSimilarFilmsAction,
+  postUserCommentAction
+} from '../async-actions';
 import {Films} from '../../types/films';
+import {LoadStatuses} from '../../types/load-statuses';
 
 const initialState: ApiProcess = {
   genre: ALL_GENRES,
   allFilms: [],
   LoadStatus: {
     Films: LoadStatus.Unknown,
+    SimilarFilms: LoadStatus.Unknown,
     Film: LoadStatus.Unknown,
     Comments: LoadStatus.Unknown,
     PostComment: LoadStatus.Unknown
@@ -17,6 +25,7 @@ const initialState: ApiProcess = {
   genres: [ALL_GENRES],
   MoviePage: {
     Film: null,
+    SimilarFilms: null,
     Comments: null
   }
 };
@@ -37,6 +46,12 @@ export const apiProcess = createSlice({
   reducers: {
     changeGenre: (state, action: PayloadAction<string>) => {
       state.genre = action.payload;
+    },
+    changeLoadStatusSimilarFilms: (state, action: PayloadAction<LoadStatuses>) => {
+      state.LoadStatus.SimilarFilms = action.payload;
+    },
+    resetSimilarFilms: (state) => {
+      state.MoviePage.SimilarFilms = null;
     }
   },
   extraReducers: (builder) => {
@@ -84,8 +99,19 @@ export const apiProcess = createSlice({
       })
       .addCase(postUserCommentAction.rejected, (state) => {
         state.LoadStatus.PostComment = LoadStatus.Fail;
+      })
+
+      .addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
+        state.MoviePage.SimilarFilms = action.payload;
+        state.LoadStatus.SimilarFilms = LoadStatus.Loaded;
+      })
+      .addCase(fetchSimilarFilmsAction.pending, (state) => {
+        state.LoadStatus.SimilarFilms = LoadStatus.Loading;
+      })
+      .addCase(fetchSimilarFilmsAction.rejected, (state) => {
+        state.LoadStatus.SimilarFilms = LoadStatus.Fail;
       });
   }
 });
 
-export const {changeGenre} = apiProcess.actions;
+export const {changeGenre, changeLoadStatusSimilarFilms, resetSimilarFilms} = apiProcess.actions;
