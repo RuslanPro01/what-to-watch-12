@@ -26,7 +26,7 @@ export function CardButtonList({filmId, isFavoriteFilm}: CardButtonListProps): J
         </svg>
         <span>Play</span>
       </button>
-      <MyListButton isFavoriteFilm={isFavoriteFilm}/>
+      <MyListButton isFavoriteFilm={isFavoriteFilm} filmId={filmId}/>
       {authStatus === AuthorizationStatus.Auth ? <AddReviewButton/> : null}
     </div>
   );

@@ -30,6 +30,22 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films, string, asyncActi
   }
 );
 
+export const fetchFavoriteFilms = createAsyncThunk<Films, undefined, asyncActionsProps> (
+  'data/fetchFavoriteFilms',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<Films>(ApiRoute.FavoriteFilms);
+    return data;
+  }
+);
+
+export const updateFavoriteStatus = createAsyncThunk<Film, {filmId: string; status: 0 | 1}, asyncActionsProps> (
+  'data/updateFavoriteStatus',
+  async ({filmId, status}, {extra: api}) => {
+    const {data} = await api.get<Film>(ApiRoute.FavoriteStatus(filmId, status));
+    return data;
+  }
+);
+
 export const fetchFilmAction = createAsyncThunk<Film, string, asyncActionsProps> (
   'data/fetchFilm',
   async (filmId, {extra: api}) => {

@@ -3,7 +3,7 @@ import {ALL_GENRES, NameSpace} from '../../common-const';
 import {LoadStatus} from '../../services/const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
-  fetchCommentsAction,
+  fetchCommentsAction, fetchFavoriteFilms,
   fetchFilmAction,
   fetchFilmsAction, fetchPromoFilmAction,
   fetchSimilarFilmsAction,
@@ -15,13 +15,15 @@ import {LoadStatuses} from '../../types/load-statuses';
 const initialState: ApiProcess = {
   genre: ALL_GENRES,
   allFilms: [],
+  favoriteFilms: [],
   LoadStatus: {
     Films: LoadStatus.Unknown,
     SimilarFilms: LoadStatus.Unknown,
     Film: LoadStatus.Unknown,
     PromoFilm: LoadStatus.Unknown,
     Comments: LoadStatus.Unknown,
-    PostComment: LoadStatus.Unknown
+    PostComment: LoadStatus.Unknown,
+    FavoriteFilms: LoadStatus.Unknown,
   },
   genres: [ALL_GENRES],
   MoviePage: {
@@ -71,6 +73,17 @@ export const apiProcess = createSlice({
       })
       .addCase(fetchFilmsAction.rejected, (state) => {
         state.LoadStatus.Films = LoadStatus.Fail;
+      })
+
+      .addCase(fetchFavoriteFilms.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
+        state.LoadStatus.FavoriteFilms = LoadStatus.Loaded;
+      })
+      .addCase(fetchFavoriteFilms.pending, (state) => {
+        state.LoadStatus.FavoriteFilms = LoadStatus.Loading;
+      })
+      .addCase(fetchFavoriteFilms.rejected, (state) => {
+        state.LoadStatus.FavoriteFilms = LoadStatus.Fail;
       })
 
       .addCase(fetchFilmAction.fulfilled, (state, action) => {

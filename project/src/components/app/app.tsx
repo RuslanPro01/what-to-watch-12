@@ -13,13 +13,24 @@ import OverviewTab from '../../pages/movie-page/overview-tab';
 import DetailsTab from '../../pages/movie-page/details-tab';
 import ReviewTab from '../../pages/movie-page/review-tab';
 import DisplayedCards from '../main-catalog-films/displayed-cards';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {selectedAuthStatus} from '../../store/user-process/selectors';
+import {useEffect} from 'react';
+import {AuthorizationStatus} from '../private-route/const';
+import {fetchFavoriteFilms} from '../../store/async-actions';
 
 const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(selectedAuthStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteFilms());
+    }
+  }, [dispatch, authorizationStatus]);
+
   return (
     <HelmetProvider>
       <BrowserRouter>

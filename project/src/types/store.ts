@@ -18,6 +18,7 @@ export type UserProcess = {
 export type ApiProcess = {
   genre: string;
   allFilms: Films;
+  favoriteFilms: Films;
   LoadStatus: {
     Films: LoadStatuses;
     SimilarFilms: LoadStatuses;
@@ -25,6 +26,7 @@ export type ApiProcess = {
     PromoFilm: LoadStatuses;
     Comments: LoadStatuses;
     PostComment: LoadStatuses;
+    FavoriteFilms: LoadStatuses;
   };
   genres: string[];
   MoviePage: {
