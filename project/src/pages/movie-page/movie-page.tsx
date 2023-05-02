@@ -1,6 +1,5 @@
-import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import {Navigate, Outlet, useNavigate, useParams} from 'react-router-dom';
+import {Navigate, Outlet, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
 import NavTab from './nav-tab';
 import FilmCards from '../../components/film-cards/film-cards';
@@ -11,23 +10,18 @@ import {LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
 import FilmContext from '../../context/film-context';
 import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/async-actions';
-import {AuthorizationStatus} from '../../components/private-route/const';
-import {MyListButton} from './my-list-button';
-import {AddReviewButton} from './add-review-button';
 import {
   selectedFilm,
   selectedLoadStatusFilm,
   selectedSimilarFilms, selectedStatusLoadSimilarFilms
 } from '../../store/api-process/selectors';
-import {selectedAuthStatus} from '../../store/user-process/selectors';
 import {changeLoadStatusSimilarFilms, resetSimilarFilms} from '../../store/api-process/api-process';
+import {FilmCardHero} from '../../components/movie-page/film-card-hero';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const loadStatusFilm = useAppSelector(selectedLoadStatusFilm);
   const film = useAppSelector(selectedFilm);
-  const authStatus = useAppSelector(selectedAuthStatus);
   const similarFilms = useAppSelector(selectedSimilarFilms);
   const loadStatusSimilarFilms = useAppSelector(selectedStatusLoadSimilarFilms);
   const dispatch = useAppDispatch();
@@ -71,34 +65,7 @@ function MoviePage(): JSX.Element {
       <section className="film-card film-card--full" style={{background: film?.backgroundColor}}>
         <ScrollToTop/>
         <div className="film-card__hero">
-          <div className="film-card__bg">
-            <img src={film?.backgroundImage} alt={film?.name}/>
-          </div>
-          <h1 className="visually-hidden">WTW</h1>
-          <Header/>
-          <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{film?.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{film?.genre}</span>
-                <span className="film-card__year">{film?.released}</span>
-              </p>
-              <div className="film-card__buttons">
-                <button
-                  className="btn btn--play film-card__button" type="button" onClick={() => {
-                    navigate(`${Path.PlayerPage.replace(':id', id)}`);
-                  }}
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <MyListButton/>
-                {authStatus === AuthorizationStatus.Auth ? <AddReviewButton/> : null}
-              </div>
-            </div>
-          </div>
+          <FilmCardHero film={film}/>
         </div>
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">

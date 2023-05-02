@@ -22,12 +22,14 @@ export type ApiProcess = {
     Films: LoadStatuses;
     SimilarFilms: LoadStatuses;
     Film: LoadStatuses;
+    PromoFilm: LoadStatuses;
     Comments: LoadStatuses;
     PostComment: LoadStatuses;
   };
   genres: string[];
   MoviePage: {
     Film: Film | null;
+    PromoFilm: Film | null;
     SimilarFilms: Films | null;
     Comments: Comments | null;
   };

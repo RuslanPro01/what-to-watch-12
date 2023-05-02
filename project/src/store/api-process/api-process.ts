@@ -5,7 +5,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
   fetchCommentsAction,
   fetchFilmAction,
-  fetchFilmsAction,
+  fetchFilmsAction, fetchPromoFilmAction,
   fetchSimilarFilmsAction,
   postUserCommentAction
 } from '../async-actions';
@@ -19,12 +19,14 @@ const initialState: ApiProcess = {
     Films: LoadStatus.Unknown,
     SimilarFilms: LoadStatus.Unknown,
     Film: LoadStatus.Unknown,
+    PromoFilm: LoadStatus.Unknown,
     Comments: LoadStatus.Unknown,
     PostComment: LoadStatus.Unknown
   },
   genres: [ALL_GENRES],
   MoviePage: {
     Film: null,
+    PromoFilm: null,
     SimilarFilms: null,
     Comments: null
   }
@@ -49,6 +51,9 @@ export const apiProcess = createSlice({
     },
     changeLoadStatusSimilarFilms: (state, action: PayloadAction<LoadStatuses>) => {
       state.LoadStatus.SimilarFilms = action.payload;
+    },
+    changeLoadStatusPromoFilm: (state, action: PayloadAction<LoadStatuses>) => {
+      state.LoadStatus.PromoFilm = action.payload;
     },
     resetSimilarFilms: (state) => {
       state.MoviePage.SimilarFilms = null;
@@ -77,6 +82,17 @@ export const apiProcess = createSlice({
       })
       .addCase(fetchFilmAction.rejected, (state) => {
         state.LoadStatus.Film = LoadStatus.Fail;
+      })
+
+      .addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
+        state.MoviePage.PromoFilm = action.payload;
+        state.LoadStatus.PromoFilm = LoadStatus.Loaded;
+      })
+      .addCase(fetchPromoFilmAction.pending, (state) => {
+        state.LoadStatus.PromoFilm = LoadStatus.Loading;
+      })
+      .addCase(fetchPromoFilmAction.rejected, (state) => {
+        state.LoadStatus.PromoFilm = LoadStatus.Fail;
       })
 
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
@@ -114,4 +130,4 @@ export const apiProcess = createSlice({
   }
 });
 
-export const {changeGenre, changeLoadStatusSimilarFilms, resetSimilarFilms} = apiProcess.actions;
+export const {changeGenre, changeLoadStatusSimilarFilms, resetSimilarFilms, changeLoadStatusPromoFilm} = apiProcess.actions;

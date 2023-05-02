@@ -1,48 +1,47 @@
-import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import MainCatalogFilms from '../../components/main-catalog-films/main-catalog-films';
-import {memo} from 'react';
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchPromoFilmAction} from '../../store/async-actions';
+import {LoadStatus} from '../../services/const';
+import {selectedLoadStatusPromoFilm, selectedPromoFilm} from '../../store/api-process/selectors';
+import {changeLoadStatusPromoFilm} from '../../store/api-process/api-process';
+import Header from '../../components/header/header';
+import {CardButtonList} from '../../components/card-button-list/card-button-list';
 
-type MainProps = {
-  filmName: string;
-  yearFilm: number;
-  filmGenre: string;
-}
+function Main(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const promoFilm = useAppSelector(selectedPromoFilm);
+  const loadStatusPromoFilm = useAppSelector(selectedLoadStatusPromoFilm);
 
-function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
+  useEffect(() => {
+    if (!promoFilm) {
+      dispatch(fetchPromoFilmAction());
+    } else if (promoFilm && loadStatusPromoFilm === LoadStatus.Loading) {
+      dispatch(changeLoadStatusPromoFilm(LoadStatus.Loaded));
+    }
+  }, [dispatch, loadStatusPromoFilm, promoFilm]);
+
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+          <img src={promoFilm?.backgroundImage} alt={promoFilm?.name}/>
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <Header/>
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={promoFilm?.posterImage} alt={`${promoFilm?.name ?? ''} poster`} width="218" height="327"/>
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmName}</h2>
+              <h2 className="film-card__title">{promoFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmGenre}</span>
-                <span className="film-card__year">{yearFilm}</span>
+                <span className="film-card__genre">{promoFilm?.genre}</span>
+                <span className="film-card__year">{promoFilm?.released}</span>
               </p>
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span> <span className="film-card__count">9</span>
-                </button>
-              </div>
+              <CardButtonList filmId={promoFilm ? String(promoFilm.id) : ''} isFavoriteFilm={!!promoFilm?.isFavorite}/>
             </div>
           </div>
         </div>
@@ -55,4 +54,5 @@ function Main({filmName, yearFilm, filmGenre}: MainProps): JSX.Element {
   );
 }
 
-export default memo(Main);
+
+export default Main;

@@ -5,7 +5,7 @@ import {Film, Films} from '../types/films';
 import {ApiRoute} from '../services/const';
 import {Comments} from '../types/comments';
 import {AuthUserData, User} from '../types/user';
-import {saveToken} from '../services/token';
+import {dropToken, saveToken} from '../services/token';
 import {userComment} from '../types/user-cooment';
 
 type asyncActionsProps = {
@@ -34,6 +34,14 @@ export const fetchFilmAction = createAsyncThunk<Film, string, asyncActionsProps>
   'data/fetchFilm',
   async (filmId, {extra: api}) => {
     const {data} = await api.get<Film>(ApiRoute.Film(filmId));
+    return data;
+  }
+);
+
+export const fetchPromoFilmAction = createAsyncThunk<Film, undefined, asyncActionsProps> (
+  'data/fetchPromoFilm',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<Film>(ApiRoute.PromoFilm);
     return data;
   }
 );
@@ -67,6 +75,7 @@ export const logOutAction = createAsyncThunk<void, undefined, asyncActionsProps>
   'user/logOut',
   async (user, {extra: api}) => {
     await api.delete<User>(ApiRoute.LogOut, user);
+    dropToken();
   }
 );
 

@@ -18,19 +18,13 @@ import {selectedAuthStatus} from '../../store/user-process/selectors';
 
 const {MainPage, Login, FilmsPages, PlayerPage, PageNotFound, MyListPage} = Path;
 
-type AppProps = {
-  filmName: string;
-  yearFilm: number;
-  filmGenre: string;
-}
-
-function App({filmName, yearFilm, filmGenre}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(selectedAuthStatus);
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={MainPage.initial} element={<Main filmName={filmName} yearFilm={yearFilm} filmGenre={filmGenre}/>}>
+          <Route path={MainPage.initial} element={<Main/>}>
             <Route path={MainPage.filmOfGenre} element={<DisplayedCards/>}/>
           </Route>
           <Route path={Login} element={<SignIn/>}/>

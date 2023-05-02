@@ -7,12 +7,6 @@ import {checkAuthStatus, fetchFilmsAction} from './store/async-actions';
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from 'react-toastify';
 
-const PromoFilm = {
-  Genre: 'Drama',
-  Year: 2014,
-  Name: 'The Grand Budapest Hotel'
-} as const;
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
@@ -24,7 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer/>
-      <App filmName={PromoFilm.Name} yearFilm={PromoFilm.Year} filmGenre={PromoFilm.Genre}/>
+      <App/>
     </Provider>
   </React.StrictMode>,
 );
