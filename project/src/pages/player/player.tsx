@@ -57,18 +57,27 @@ function Player(): JSX.Element {
       }
     };
 
+    const handleLoadedMetadata = () => {
+      if (videoRef.current) {
+        setTimeRemaining(videoRef.current.duration - videoRef.current.currentTime);
+      }
+    };
+
     const currentVideoRef = videoRef.current;
 
     if (currentVideoRef) {
       currentVideoRef.addEventListener('timeupdate', handleTimeUpdate);
+      currentVideoRef.addEventListener('loadedmetadata', handleLoadedMetadata);
     }
 
     return () => {
       if (currentVideoRef) {
         currentVideoRef.removeEventListener('timeupdate', handleTimeUpdate);
+        currentVideoRef.removeEventListener('loadedmetadata', handleLoadedMetadata);
       }
     };
   }, []);
+
 
   useEffect(() => {
     if (videoRef.current) {
@@ -141,7 +150,7 @@ function Player(): JSX.Element {
             <progress className="player__progress" value={videoRef.current ? videoRef.current.currentTime : 0} max={videoRef.current ? videoRef.current.duration : 100}></progress>
             <div className="player__toggler" style={{left: togglePosition}}>Toggler</div>
           </div>
-          <div className="player__time-value">{timeRemaining && formatRemainingTime(timeRemaining)}</div>
+          <div className="player__time-value">{timeRemaining ? formatRemainingTime(timeRemaining) : '00:00'}</div>
         </div>
         <div className="player__controls-row">
           {
