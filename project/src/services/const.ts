@@ -8,8 +8,10 @@ export const StatusCodeMapping: Record<number, boolean> = {
 export const ApiRoute = {
   Films: '/films',
   Film: (id: string) => `/films/${id}`,
+  SimilarFilms: (id: string) => `/films/${id}/similar`,
   Comments: (id: string) => `/comments/${id}`,
-  Login: '/login'
+  Login: '/login',
+  LogOut: '/logout'
 };
 
 export const LoadStatus = {

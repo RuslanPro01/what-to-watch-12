@@ -2,17 +2,19 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {convertGenreToRoute} from '../../utils';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre} from '../../store/action';
-import {selectedGenres} from '../../store/selectors';
 import {Helmet} from 'react-helmet-async';
+import {useCallback} from 'react';
+import {changeGenre} from '../../store/api-process/api-process';
+import {selectedGenre, selectedGenres} from '../../store/api-process/selectors';
 
 function CatalogGenresList(): JSX.Element {
-  const chosenGenre = useAppSelector((state) => state.genre);
+  const chosenGenre = useAppSelector(selectedGenre);
   const uniqGenres = useAppSelector(selectedGenres);
   const dispatch = useAppDispatch();
-  const handleGenreLink = (genre: string) => {
+
+  const handleGenreLink = useCallback((genre: string) => {
     dispatch(changeGenre(genre));
-  };
+  }, [dispatch]);
 
   return (
     <ul className="catalog__genres-list">

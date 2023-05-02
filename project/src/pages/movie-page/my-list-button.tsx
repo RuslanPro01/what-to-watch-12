@@ -1,8 +1,8 @@
 import {useAppSelector} from '../../hooks';
-import {selectedAuthStatus} from '../../store/selectors';
 import {useNavigate} from 'react-router-dom';
 import {AuthorizationStatus} from '../../components/private-route/const';
 import {Path} from '../../common-const';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
 
 export function MyListButton():JSX.Element {
   const authStatus = useAppSelector(selectedAuthStatus);

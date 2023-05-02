@@ -1,12 +1,6 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {toast} from 'react-toastify';
-import {ApiRoute, LoadStatus, StatusCodeMapping} from './const';
-import {
-  changeLoadStatusComments,
-  changeLoadStatusFilm,
-  changeLoadStatusFilms, changePostCommentStatus,
-} from '../store/action';
-import {store} from '../store';
+import {StatusCodeMapping} from './const';
 import {getToken} from './token';
 
 const BASE_URL = 'https://12.react.pages.academy/wtw';
@@ -37,10 +31,7 @@ export const createApi = () => {
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
         toast.error(error.response.data.error);
-        const urlAddress = error.response.config.url;
-        const requestMethod = error.response.config.method;
-
-        if (urlAddress && requestMethod) {
+        /*if (urlAddress && requestMethod) {
           const isFilmsRouteError = urlAddress.includes(ApiRoute.Films);
           const isFilmRouteError = urlAddress.includes(ApiRoute.Film('')) && +urlAddress[urlAddress.length - 1] >= 0;
           const isCommentsRouteError = urlAddress.includes(ApiRoute.Comments('')) && +urlAddress[urlAddress.length - 1] >= 0;
@@ -58,7 +49,7 @@ export const createApi = () => {
               store.dispatch(changeLoadStatusComments(LoadStatus.Fail));
             }
           }
-        }
+        }*/
       }
       throw error;
     }

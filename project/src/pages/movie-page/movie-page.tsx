@@ -5,42 +5,50 @@ import {Path} from '../../common-const';
 import NavTab from './nav-tab';
 import FilmCards from '../../components/film-cards/film-cards';
 import {ScrollToTop} from '../../components/scroll-to-top/scrollToTop';
-import {useAppSelector} from '../../hooks';
-import {selectedAllFilms, selectedAuthStatus, selectedFilm, selectedLoadStatusFilm} from '../../store/selectors';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {LoadStatus} from '../../services/const';
 import {Spinner} from '../../components/spiner/spinner';
 import FilmContext from '../../context/film-context';
-import {fetchFilmAction} from '../../store/async-actions';
-import {store} from '../../store';
+import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/async-actions';
 import {AuthorizationStatus} from '../../components/private-route/const';
 import {MyListButton} from './my-list-button';
 import {AddReviewButton} from './add-review-button';
+import {
+  selectedFilm,
+  selectedLoadStatusFilm,
+  selectedSimilarFilms, selectedStatusLoadSimilarFilms
+} from '../../store/api-process/selectors';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
+import {changeLoadStatusSimilarFilms, resetSimilarFilms} from '../../store/api-process/api-process';
 
 function MoviePage(): JSX.Element {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
   const loadStatusFilm = useAppSelector(selectedLoadStatusFilm);
   const film = useAppSelector(selectedFilm);
-  const films = useAppSelector(selectedAllFilms);
   const authStatus = useAppSelector(selectedAuthStatus);
+  const similarFilms = useAppSelector(selectedSimilarFilms);
+  const loadStatusSimilarFilms = useAppSelector(selectedStatusLoadSimilarFilms);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) {
-      store.dispatch(fetchFilmAction(id));
+      dispatch(fetchFilmAction(id));
+      changeLoadStatusSimilarFilms(LoadStatus.Unknown);
+      dispatch(resetSimilarFilms);
     }
-  }, [id]);
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchSimilarFilmsAction(id));
+    }
+  }, [id, dispatch]);
 
   if (!id) {
     return <Navigate to={Path.PageNotFound}/>;
   }
-
-  const similarFilms = film ? [...films].filter((filmElement) => {
-    if (filmElement.id === +id) {
-      return false;
-    }
-    return filmElement.genre === film.genre;
-  }) : [];
 
   if (loadStatusFilm === LoadStatus.Loading || loadStatusFilm === LoadStatus.Unknown) {
     return (
@@ -113,7 +121,7 @@ function MoviePage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           {
-            similarFilms.length ?
+            similarFilms && loadStatusSimilarFilms === LoadStatus.Loaded ?
               <>
                 <h2 className="catalog__title">More like this</h2>
                 <FilmCards films={similarFilms}/>

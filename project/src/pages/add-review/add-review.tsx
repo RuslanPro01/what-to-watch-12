@@ -1,18 +1,18 @@
 import Logo from '../../components/header/logo';
 import UserAuthBlock from '../../components/header/user-auth-block';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Path} from '../../common-const';
-import {useParams} from 'react-router-dom';
 import ReviewForm from '../../components/review-form/review-form';
 import {Helmet} from 'react-helmet-async';
 import {useAppSelector} from '../../hooks';
-import {selectedAuthStatus, selectedFilm} from '../../store/selectors';
 import {useEffect} from 'react';
 import {store} from '../../store';
 import {fetchFilmAction} from '../../store/async-actions';
 import {Spinner} from '../../components/spiner/spinner';
 import {AuthorizationStatus} from '../../components/private-route/const';
 import UserUnAuthBlock from '../../components/header/user-unauth-block';
+import {selectedFilm} from '../../store/api-process/selectors';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
 
 function AddReview(): JSX.Element {
   const {id} = useParams<{ id: string }>();

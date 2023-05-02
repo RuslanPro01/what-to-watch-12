@@ -1,6 +1,6 @@
 import {Films} from '../../types/films';
 import FilmCard from '../film-card/film-card';
-import {useState} from 'react';
+import {memo, useState} from 'react';
 
 function FilmCards({films}: {films: Films}): JSX.Element {
   const [activeFilm, setActiveFilm] = useState<null | number>(null);
@@ -28,4 +28,4 @@ function FilmCards({films}: {films: Films}): JSX.Element {
   );
 }
 
-export default FilmCards;
+export default memo(FilmCards);

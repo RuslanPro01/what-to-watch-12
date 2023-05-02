@@ -1,15 +1,14 @@
-import {useState, MouseEvent, ChangeEvent, useRef, useEffect} from 'react';
-import {ratings, BASE_RATING_VALUE, MIN_LENGTH_REVIEW, TIME_OUT_SHOW_ERROR, MAX_LENGTH_REVIEW} from './const';
+import {ChangeEvent, MouseEvent, useEffect, useRef, useState} from 'react';
+import {BASE_RATING_VALUE, MAX_LENGTH_REVIEW, MIN_LENGTH_REVIEW, ratings, TIME_OUT_SHOW_ERROR} from './const';
 import {toast} from 'react-toastify';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {selectedPostStatusComment} from '../../store/selectors';
+import {useAppSelector} from '../../hooks';
 import {LoadStatus} from '../../services/const';
 import {userComment} from '../../types/user-cooment';
 import {useNavigate, useParams} from 'react-router-dom';
 import {store} from '../../store';
 import {postUserCommentAction} from '../../store/async-actions';
 import {Path} from '../../common-const';
-import {changePostCommentStatus} from '../../store/action';
+import {selectedPostStatusComment} from '../../store/api-process/selectors';
 
 type ReviewFormProps = {
   color: string;
@@ -25,7 +24,6 @@ function ReviewForm({color}: ReviewFormProps): JSX.Element {
   };
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState(baseReviewState);
   const [isReviewTextValid, setIsReviewTextValid] = useState<boolean>(false);
   const [isRatingValid, setIsRatingValid] = useState<boolean>(false);
@@ -50,9 +48,8 @@ function ReviewForm({color}: ReviewFormProps): JSX.Element {
       });
 
       navigate(`${Path.FilmsPages.MainPage.replace(':id', id as string)}/${Path.FilmsPages.Tabs.Reviews}`);
-      dispatch(changePostCommentStatus(LoadStatus.Unknown));
     }
-  }, [navigate, id, postCommentStatus, dispatch]);
+  }, [navigate, id, postCommentStatus]);
 
   function showErrorMassage(error: string) {
     clearTimeout(timeOut.current);
