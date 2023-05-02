@@ -3,12 +3,22 @@ import Footer from '../../components/footer/footer';
 import Logo from '../../components/header/logo';
 import UserAuthBlock from '../../components/header/user-auth-block';
 import {Helmet} from 'react-helmet-async';
-import {useAppSelector} from '../../hooks';
-import {selectedAllFilms} from '../../store/api-process/selectors';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {selectedFavoriteFilms, selectedStatusLoadFavoriteFilms} from '../../store/api-process/selectors';
+import {useEffect} from 'react';
+import {fetchFavoriteFilms} from '../../store/async-actions';
+import {LoadStatus} from '../../services/const';
 
 function MyList(): JSX.Element {
-  const films = useAppSelector(selectedAllFilms);
-  const favoriteFilms = [...films].filter(({isFavorite}) => isFavorite);
+  const favoriteFilms = useAppSelector(selectedFavoriteFilms);
+  const dispatch = useAppDispatch();
+  const loadStatusFavoriteFilms = useAppSelector(selectedStatusLoadFavoriteFilms);
+
+  useEffect(() => {
+    if (!favoriteFilms) {
+      dispatch(fetchFavoriteFilms);
+    }
+  }, [dispatch, favoriteFilms]);
   return (
     <div className="user-page">
       <Helmet>
@@ -21,7 +31,10 @@ function MyList(): JSX.Element {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmCards films={favoriteFilms}/>
+        {
+          loadStatusFavoriteFilms === LoadStatus.Loaded &&
+          <FilmCards films={favoriteFilms}/>
+        }
       </section>
       <Footer/>
     </div>
