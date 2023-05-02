@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
-import { AuthorizationStatus } from '../private-route/const';
-import { Path } from '../../common-const';
-import { selectedAuthStatus } from '../../store/user-process/selectors';
-import { useState, useCallback } from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useNavigate} from 'react-router-dom';
+import {AuthorizationStatus} from '../private-route/const';
+import {Path} from '../../common-const';
+import {selectedAuthStatus} from '../../store/user-process/selectors';
+import {useCallback, useState} from 'react';
 import {selectedFavoriteFilms, selectedStatusLoadFavoriteFilms} from '../../store/api-process/selectors';
 import {fetchFavoriteFilms, updateFavoriteStatus} from '../../store/async-actions';
 import {toast} from 'react-toastify';

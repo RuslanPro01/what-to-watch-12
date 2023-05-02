@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {TIME_OUT_ACTIVE_VIDEO} from '../../common-const';
@@ -25,6 +25,7 @@ function FilmCard({
   handleMouseLeave
 }: FilmCardProps): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let timeOut: NodeJS.Timeout;
@@ -39,11 +40,17 @@ function FilmCard({
     };
   }, [isActiveFilm]);
 
+  const handleFilmCardClick = () => {
+    navigate(`/films/${id}/`);
+  };
+
   return (
     <article
       className={classNames('small-film-card', 'catalog__films-card', {'active-film-card': isActiveFilm})}
       onMouseEnter={() => handleMouseEnter(id)}
       onMouseLeave={() => handleMouseLeave(null)}
+      onClick={handleFilmCardClick}
+      style={{cursor: 'pointer'}}
     >
       <div className="small-film-card__image">
         {
@@ -67,7 +74,7 @@ function FilmCard({
         }
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}/`}>{name}</Link>
+        {name}
       </h3>
     </article>
   );

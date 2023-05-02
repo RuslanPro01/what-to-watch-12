@@ -3,9 +3,11 @@ import {ALL_GENRES, NameSpace} from '../../common-const';
 import {LoadStatus} from '../../services/const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
-  fetchCommentsAction, fetchFavoriteFilms,
+  fetchCommentsAction,
+  fetchFavoriteFilms,
   fetchFilmAction,
-  fetchFilmsAction, fetchPromoFilmAction,
+  fetchFilmsAction,
+  fetchPromoFilmAction,
   fetchSimilarFilmsAction,
   postUserCommentAction
 } from '../async-actions';
@@ -53,9 +55,6 @@ export const apiProcess = createSlice({
     },
     changeLoadStatusSimilarFilms: (state, action: PayloadAction<LoadStatuses>) => {
       state.LoadStatus.SimilarFilms = action.payload;
-    },
-    changeLoadStatusPromoFilm: (state, action: PayloadAction<LoadStatuses>) => {
-      state.LoadStatus.PromoFilm = action.payload;
     },
     resetSimilarFilms: (state) => {
       state.MoviePage.SimilarFilms = null;
@@ -143,4 +142,4 @@ export const apiProcess = createSlice({
   }
 });
 
-export const {changeGenre, changeLoadStatusSimilarFilms, resetSimilarFilms, changeLoadStatusPromoFilm} = apiProcess.actions;
+export const {changeGenre, changeLoadStatusSimilarFilms, resetSimilarFilms} = apiProcess.actions;

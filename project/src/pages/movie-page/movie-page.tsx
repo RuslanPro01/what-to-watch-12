@@ -13,7 +13,8 @@ import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/async-action
 import {
   selectedFilm,
   selectedLoadStatusFilm,
-  selectedSimilarFilms, selectedStatusLoadSimilarFilms
+  selectedSimilarFilms,
+  selectedStatusLoadSimilarFilms
 } from '../../store/api-process/selectors';
 import {changeLoadStatusSimilarFilms, resetSimilarFilms} from '../../store/api-process/api-process';
 import {FilmCardHero} from '../../components/movie-page/film-card-hero';
