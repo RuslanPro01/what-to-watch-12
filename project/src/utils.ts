@@ -33,27 +33,42 @@ export function convertRatingToText(rating?: number) {
     return '';
   }
   const TextRating = {
-    BAD: 'Bad',
-    NORMAL: 'Normal',
-    GOOD: 'Good',
-    VERY_GOOD: 'Very good',
-    AWESOME: 'Awesome'
-  };
+    Bad: {
+      Text: 'Bad',
+      Value: 3
+    },
+    Normal: {
+      Text: 'Normal',
+      Value: 5
+    },
+    Good: {
+      Text: 'Good',
+      Value: 8
+    },
+    VeryGood: {
+      Text: 'Very good',
+      Value: 10
+    },
+    Awesome: {
+      Text: 'Awesome',
+      Value: 10
+    }
+  } as const;
 
-  if (rating < 3) {
-    return TextRating.BAD;
+  if (rating < TextRating.Bad.Value) {
+    return TextRating.Bad.Text;
   }
-  if (rating < 5) {
-    return TextRating.NORMAL;
+  if (rating < TextRating.Normal.Value) {
+    return TextRating.Normal.Text;
   }
-  if (rating < 8) {
-    return TextRating.GOOD;
+  if (rating < TextRating.Good.Value) {
+    return TextRating.Good.Text;
   }
-  if (rating < 10) {
-    return TextRating.VERY_GOOD;
+  if (rating < TextRating.VeryGood.Value) {
+    return TextRating.VeryGood.Text;
   }
-  if (rating === 10) {
-    return TextRating.AWESOME;
+  if (rating === TextRating.Awesome.Value) {
+    return TextRating.Awesome.Text;
   }
 }
 
@@ -63,7 +78,7 @@ export function createHumanizeTime(time?: number) {
   if (!time) {
     return null;
   }
-  if (time <= 60) {
+  if (time <= MINUTES_IN_HOUR) {
     return `${time}m`;
   }
 

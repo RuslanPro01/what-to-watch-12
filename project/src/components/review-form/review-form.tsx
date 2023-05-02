@@ -117,7 +117,6 @@ function ReviewForm({color}: ReviewFormProps): JSX.Element {
                       type="radio"
                       name="rating"
                       value={rating}
-                      checked={formData.rating === rating}
                       disabled={postCommentStatus === LoadStatus.Loading}
                       key={rating}
                     />
