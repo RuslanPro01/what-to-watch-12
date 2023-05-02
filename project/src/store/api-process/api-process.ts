@@ -33,7 +33,8 @@ const initialState: ApiProcess = {
     PromoFilm: null,
     SimilarFilms: null,
     Comments: null
-  }
+  },
+  error: null
 };
 
 function generateUniqueGenres(films: Films) {

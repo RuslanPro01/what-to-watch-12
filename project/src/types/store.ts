@@ -35,4 +35,5 @@ export type ApiProcess = {
     SimilarFilms: Films | null;
     Comments: Comments | null;
   };
+  error: string | null;
 }

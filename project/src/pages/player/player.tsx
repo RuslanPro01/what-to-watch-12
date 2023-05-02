@@ -26,7 +26,7 @@ function Player(): JSX.Element {
   const [playing, setPlaying] = useState<boolean>(true);
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
 
-  const videoHandler = (control: Control) => {
+  const videoClickHandler = (control: Control) => {
     if (videoRef.current) {
       if (control === VideoControl.Play) {
         videoRef.current.play();
@@ -38,15 +38,15 @@ function Player(): JSX.Element {
     }
   };
 
-  const handlerPlayButtonClick = useCallback(() => videoHandler(VideoControl.Play), []);
-  const handlerPauseButtonClick = useCallback(() => videoHandler(VideoControl.Pause), []);
+  const handlerPlayButtonClick = useCallback(() => videoClickHandler(VideoControl.Play), []);
+  const handlerPauseButtonClick = useCallback(() => videoClickHandler(VideoControl.Pause), []);
 
   useEffect(() => {
     if (!film && id) {
       dispatch(fetchFilmAction(id));
     }
     if (film && id) {
-      videoHandler(VideoControl.Play);
+      videoClickHandler(VideoControl.Play);
     }
   }, [film, id, dispatch]);
 
