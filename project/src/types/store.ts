@@ -18,17 +18,22 @@ export type UserProcess = {
 export type ApiProcess = {
   genre: string;
   allFilms: Films;
+  favoriteFilms: Films;
   LoadStatus: {
     Films: LoadStatuses;
     SimilarFilms: LoadStatuses;
     Film: LoadStatuses;
+    PromoFilm: LoadStatuses;
     Comments: LoadStatuses;
     PostComment: LoadStatuses;
+    FavoriteFilms: LoadStatuses;
   };
   genres: string[];
   MoviePage: {
     Film: Film | null;
+    PromoFilm: Film | null;
     SimilarFilms: Films | null;
     Comments: Comments | null;
   };
+  error: string | null;
 }

@@ -5,7 +5,7 @@ import {Film, Films} from '../types/films';
 import {ApiRoute} from '../services/const';
 import {Comments} from '../types/comments';
 import {AuthUserData, User} from '../types/user';
-import {saveToken} from '../services/token';
+import {dropToken, saveToken} from '../services/token';
 import {userComment} from '../types/user-cooment';
 
 type asyncActionsProps = {
@@ -30,10 +30,34 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films, string, asyncActi
   }
 );
 
+export const fetchFavoriteFilms = createAsyncThunk<Films, undefined, asyncActionsProps> (
+  'data/fetchFavoriteFilms',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<Films>(ApiRoute.FavoriteFilms);
+    return data;
+  }
+);
+
+export const updateFavoriteStatus = createAsyncThunk<Film, {filmId: string; status: 0 | 1}, asyncActionsProps> (
+  'data/updateFavoriteStatus',
+  async ({filmId, status}, {extra: api}) => {
+    const {data} = await api.post<Film>(ApiRoute.FavoriteStatus(filmId, status));
+    return data;
+  }
+);
+
 export const fetchFilmAction = createAsyncThunk<Film, string, asyncActionsProps> (
   'data/fetchFilm',
   async (filmId, {extra: api}) => {
     const {data} = await api.get<Film>(ApiRoute.Film(filmId));
+    return data;
+  }
+);
+
+export const fetchPromoFilmAction = createAsyncThunk<Film, undefined, asyncActionsProps> (
+  'data/fetchPromoFilm',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<Film>(ApiRoute.PromoFilm);
     return data;
   }
 );
@@ -67,6 +91,7 @@ export const logOutAction = createAsyncThunk<void, undefined, asyncActionsProps>
   'user/logOut',
   async (user, {extra: api}) => {
     await api.delete<User>(ApiRoute.LogOut, user);
+    dropToken();
   }
 );
 

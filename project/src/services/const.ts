@@ -8,10 +8,13 @@ export const StatusCodeMapping: Record<number, boolean> = {
 export const ApiRoute = {
   Films: '/films',
   Film: (id: string) => `/films/${id}`,
+  PromoFilm: '/promo',
   SimilarFilms: (id: string) => `/films/${id}/similar`,
   Comments: (id: string) => `/comments/${id}`,
   Login: '/login',
-  LogOut: '/logout'
+  LogOut: '/logout',
+  FavoriteStatus: (filmId: string, status: 0 | 1) => `/favorite/${filmId}/${status}`,
+  FavoriteFilms: '/favorite',
 };
 
 export const LoadStatus = {

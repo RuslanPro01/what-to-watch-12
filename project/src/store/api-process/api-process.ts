@@ -4,8 +4,10 @@ import {LoadStatus} from '../../services/const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
   fetchCommentsAction,
+  fetchFavoriteFilms,
   fetchFilmAction,
   fetchFilmsAction,
+  fetchPromoFilmAction,
   fetchSimilarFilmsAction,
   postUserCommentAction
 } from '../async-actions';
@@ -15,19 +17,24 @@ import {LoadStatuses} from '../../types/load-statuses';
 const initialState: ApiProcess = {
   genre: ALL_GENRES,
   allFilms: [],
+  favoriteFilms: [],
   LoadStatus: {
     Films: LoadStatus.Unknown,
     SimilarFilms: LoadStatus.Unknown,
     Film: LoadStatus.Unknown,
+    PromoFilm: LoadStatus.Unknown,
     Comments: LoadStatus.Unknown,
-    PostComment: LoadStatus.Unknown
+    PostComment: LoadStatus.Unknown,
+    FavoriteFilms: LoadStatus.Unknown,
   },
   genres: [ALL_GENRES],
   MoviePage: {
     Film: null,
+    PromoFilm: null,
     SimilarFilms: null,
     Comments: null
-  }
+  },
+  error: null
 };
 
 function generateUniqueGenres(films: Films) {
@@ -68,6 +75,17 @@ export const apiProcess = createSlice({
         state.LoadStatus.Films = LoadStatus.Fail;
       })
 
+      .addCase(fetchFavoriteFilms.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
+        state.LoadStatus.FavoriteFilms = LoadStatus.Loaded;
+      })
+      .addCase(fetchFavoriteFilms.pending, (state) => {
+        state.LoadStatus.FavoriteFilms = LoadStatus.Loading;
+      })
+      .addCase(fetchFavoriteFilms.rejected, (state) => {
+        state.LoadStatus.FavoriteFilms = LoadStatus.Fail;
+      })
+
       .addCase(fetchFilmAction.fulfilled, (state, action) => {
         state.MoviePage.Film = action.payload;
         state.LoadStatus.Film = LoadStatus.Loaded;
@@ -77,6 +95,17 @@ export const apiProcess = createSlice({
       })
       .addCase(fetchFilmAction.rejected, (state) => {
         state.LoadStatus.Film = LoadStatus.Fail;
+      })
+
+      .addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
+        state.MoviePage.PromoFilm = action.payload;
+        state.LoadStatus.PromoFilm = LoadStatus.Loaded;
+      })
+      .addCase(fetchPromoFilmAction.pending, (state) => {
+        state.LoadStatus.PromoFilm = LoadStatus.Loading;
+      })
+      .addCase(fetchPromoFilmAction.rejected, (state) => {
+        state.LoadStatus.PromoFilm = LoadStatus.Fail;
       })
 
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {

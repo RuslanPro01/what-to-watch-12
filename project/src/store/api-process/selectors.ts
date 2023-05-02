@@ -4,13 +4,17 @@ import {createSelector} from '@reduxjs/toolkit';
 
 const selectAllFilms = (state: State) => state[NameSpace.Api].allFilms;
 const selectFilm = (state: State) => state[NameSpace.Api].MoviePage.Film;
+const selectPromoFilm = (state: State) => state[NameSpace.Api].MoviePage.PromoFilm;
 const selectSimilarFilms = (state: State) => state[NameSpace.Api].MoviePage.SimilarFilms;
+const selectFavoriteFilms = (state: State) => state[NameSpace.Api].favoriteFilms;
 const selectStatusLoadSimilarFilms = (state: State) => state[NameSpace.Api].LoadStatus.SimilarFilms;
 const selectComments = (state: State) => state[NameSpace.Api].MoviePage.Comments;
 const selectGenre = (state: State) => state[NameSpace.Api].genre;
 const selectLoadStatusFilms = (state: State) => state[NameSpace.Api].LoadStatus.Films;
 const selectLoadStatusFilm = (state: State) => state[NameSpace.Api].LoadStatus.Film;
+const selectLoadStatusPromoFilm = (state: State) => state[NameSpace.Api].LoadStatus.PromoFilm;
 const selectLoadStatusComments = (state: State) => state[NameSpace.Api].LoadStatus.Comments;
+const selectLoadStatusFavoriteFilms = (state: State) => state[NameSpace.Api].LoadStatus.FavoriteFilms;
 const selectPostStatusComment = (state: State) => state[NameSpace.Api].LoadStatus.PostComment;
 const selectGenres = (state: State) => state[NameSpace.Api].genres;
 
@@ -34,6 +38,11 @@ export const selectedLoadStatusFilm = createSelector(
   (loadStatus) => loadStatus
 );
 
+export const selectedLoadStatusPromoFilm = createSelector(
+  [selectLoadStatusPromoFilm],
+  (loadStatus) => loadStatus
+);
+
 export const selectedLoadStatusComments = createSelector(
   [selectLoadStatusComments],
   (loadStatusComments) => loadStatusComments
@@ -49,9 +58,19 @@ export const selectedAllFilms = createSelector(
   (allFilms) => allFilms
 );
 
+export const selectedFavoriteFilms = createSelector(
+  [selectFavoriteFilms],
+  (favoriteFilms) => favoriteFilms
+);
+
 export const selectedFilm = createSelector(
   [selectFilm],
   (film) => film
+);
+
+export const selectedPromoFilm = createSelector(
+  [selectPromoFilm],
+  (promoFilm) => promoFilm
 );
 
 export const selectedSimilarFilms = createSelector(
@@ -61,6 +80,11 @@ export const selectedSimilarFilms = createSelector(
 
 export const selectedStatusLoadSimilarFilms = createSelector(
   [selectStatusLoadSimilarFilms],
+  (status) => status
+);
+
+export const selectedStatusLoadFavoriteFilms = createSelector(
+  [selectLoadStatusFavoriteFilms],
   (status) => status
 );
 
