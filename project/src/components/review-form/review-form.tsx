@@ -119,6 +119,7 @@ function ReviewForm({color}: ReviewFormProps): JSX.Element {
                       value={rating}
                       checked={formData.rating === rating}
                       disabled={postCommentStatus === LoadStatus.Loading}
+                      key={rating}
                     />
                     <label className="rating__label" htmlFor={`star-${rating}`}>Rating {rating}</label>
                   </>

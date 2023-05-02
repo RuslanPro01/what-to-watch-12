@@ -58,7 +58,7 @@ export function MyListButton({ filmId, isFavoriteFilm }: MyListButtonProps): JSX
       disabled={isButtonDisabled}
     >
       <svg viewBox="0 0 19 20" width="19" height="20">
-        <use xlinkHref={isFilmFavorite ? '#in-list' : '#add'}></use>
+        <use xlinkHref={isFilmFavorite && authStatus === AuthorizationStatus.Auth ? '#in-list' : '#add'}></use>
       </svg>
       <span>My list</span>
       {authStatus === AuthorizationStatus.Auth && loadStatusFavoriteFilms === LoadStatus.Loaded ? (
