@@ -3,11 +3,10 @@ import MainCatalogFilms from '../../components/main-catalog-films/main-catalog-f
 import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchPromoFilmAction} from '../../store/async-actions';
-import {LoadStatus} from '../../services/const';
 import {selectedLoadStatusPromoFilm, selectedPromoFilm} from '../../store/api-process/selectors';
-import {changeLoadStatusPromoFilm} from '../../store/api-process/api-process';
 import Header from '../../components/header/header';
 import {CardButtonList} from '../../components/card-button-list/card-button-list';
+import {LoadStatus} from '../../services/const';
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,12 +14,8 @@ function Main(): JSX.Element {
   const loadStatusPromoFilm = useAppSelector(selectedLoadStatusPromoFilm);
 
   useEffect(() => {
-    if (!promoFilm) {
-      dispatch(fetchPromoFilmAction());
-    } else if (promoFilm && loadStatusPromoFilm === LoadStatus.Loading) {
-      dispatch(changeLoadStatusPromoFilm(LoadStatus.Loaded));
-    }
-  }, [dispatch, loadStatusPromoFilm, promoFilm]);
+    dispatch(fetchPromoFilmAction());
+  }, [dispatch]);
 
   return (
     <>
@@ -41,7 +36,14 @@ function Main(): JSX.Element {
                 <span className="film-card__genre">{promoFilm?.genre}</span>
                 <span className="film-card__year">{promoFilm?.released}</span>
               </p>
-              <CardButtonList filmId={promoFilm ? String(promoFilm.id) : ''} isFavoriteFilm={!!promoFilm?.isFavorite}/>
+              {
+                loadStatusPromoFilm === LoadStatus.Loaded && promoFilm && (
+                  <CardButtonList
+                    filmId={String(promoFilm.id)}
+                    isFavoriteFilm={promoFilm.isFavorite}
+                  />
+                )
+              }
             </div>
           </div>
         </div>

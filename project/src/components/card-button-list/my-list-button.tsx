@@ -4,9 +4,10 @@ import { AuthorizationStatus } from '../private-route/const';
 import { Path } from '../../common-const';
 import { selectedAuthStatus } from '../../store/user-process/selectors';
 import { useState, useCallback } from 'react';
-import { selectedFavoriteFilms } from '../../store/api-process/selectors';
-import { updateFavoriteStatus } from '../../store/async-actions';
+import {selectedFavoriteFilms, selectedStatusLoadFavoriteFilms} from '../../store/api-process/selectors';
+import {fetchFavoriteFilms, updateFavoriteStatus} from '../../store/async-actions';
 import {toast} from 'react-toastify';
+import {LoadStatus} from '../../services/const';
 
 type MyListButtonProps = {
   filmId: string;
@@ -20,6 +21,8 @@ export function MyListButton({ filmId, isFavoriteFilm }: MyListButtonProps): JSX
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const favoriteFilms = useAppSelector(selectedFavoriteFilms);
+  const [favoriteFilmsCount, setFavoriteFilmsCount] = useState<number>(favoriteFilms.length);
+  const loadStatusFavoriteFilms = useAppSelector(selectedStatusLoadFavoriteFilms);
 
   const handleMyListClick = useCallback(() => {
     if (authStatus === AuthorizationStatus.NoAuth) {
@@ -31,14 +34,20 @@ export function MyListButton({ filmId, isFavoriteFilm }: MyListButtonProps): JSX
           const newStatus = isFilmFavorite ? 0 : 1;
           const updatedFilm = await dispatch(updateFavoriteStatus({ filmId, status: newStatus })).unwrap();
           setIsFilmFavorite(updatedFilm.isFavorite);
+          if (newStatus) {
+            setFavoriteFilmsCount(favoriteFilmsCount + 1);
+          } else {
+            setFavoriteFilmsCount(favoriteFilmsCount - 1);
+          }
         } catch (error) {
           toast.warn('Error');
         } finally {
+          dispatch(fetchFavoriteFilms());
           setIsButtonDisabled(false);
         }
       })();
     }
-  }, [authStatus, dispatch, filmId, isFilmFavorite, navigate]);
+  }, [authStatus, dispatch, favoriteFilmsCount, filmId, isFilmFavorite, navigate]);
 
 
   return (
@@ -52,8 +61,8 @@ export function MyListButton({ filmId, isFavoriteFilm }: MyListButtonProps): JSX
         <use xlinkHref={isFilmFavorite ? '#in-list' : '#add'}></use>
       </svg>
       <span>My list</span>
-      {authStatus === AuthorizationStatus.Auth ? (
-        <span className="film-card__count">{favoriteFilms.length}</span>
+      {authStatus === AuthorizationStatus.Auth && loadStatusFavoriteFilms === LoadStatus.Loaded ? (
+        <span className="film-card__count">{favoriteFilmsCount}</span>
       ) : null}
     </button>
   );

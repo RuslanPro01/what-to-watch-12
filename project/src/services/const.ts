@@ -14,7 +14,7 @@ export const ApiRoute = {
   Login: '/login',
   LogOut: '/logout',
   FavoriteStatus: (filmId: string, status: 0 | 1) => `/favorite/${filmId}/${status}`,
-  FavoriteFilms: '/favorite/',
+  FavoriteFilms: '/favorite',
 };
 
 export const LoadStatus = {
