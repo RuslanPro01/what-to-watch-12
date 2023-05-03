@@ -1,5 +1,10 @@
 import {ChangeEvent, MouseEvent, useEffect, useRef, useState} from 'react';
-import {BASE_RATING_VALUE, MAX_LENGTH_REVIEW, MIN_LENGTH_REVIEW, ratings, TIME_OUT_SHOW_ERROR} from './const';
+import {
+  BASE_RATING_VALUE,
+  LengthReview,
+  ratings,
+  TIME_OUT_SHOW_ERROR
+} from './const';
 import {toast} from 'react-toastify';
 import {useAppSelector} from '../../hooks';
 import {LoadStatus} from '../../services/const';
@@ -75,11 +80,11 @@ function ReviewForm({color}: ReviewFormProps): JSX.Element {
     const {value} = evt.target as HTMLTextAreaElement;
     const valueLength = value.length;
 
-    if (valueLength < MIN_LENGTH_REVIEW) {
-      showErrorMassage(`Minimum number of characters is ${MIN_LENGTH_REVIEW}, currently entered is ${valueLength}.`);
+    if (valueLength < LengthReview.Min) {
+      showErrorMassage(`Minimum number of characters is ${LengthReview.Min}, currently entered is ${valueLength}.`);
       setIsReviewTextValid(false);
-    } else if (valueLength > MAX_LENGTH_REVIEW) {
-      showErrorMassage(`Maximum number of characters is ${MAX_LENGTH_REVIEW}, currently entered is ${valueLength}.`);
+    } else if (valueLength > LengthReview.Max) {
+      showErrorMassage(`Maximum number of characters is ${LengthReview.Max}, currently entered is ${valueLength}.`);
       setIsReviewTextValid(false);
     } else {
       setIsReviewTextValid(true);

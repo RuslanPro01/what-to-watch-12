@@ -44,8 +44,7 @@ function ReviewTab(): JSX.Element {
       <Helmet>
         <title>{film?.name} {film?.genre} — {Path.FilmsPages.Tabs.Reviews}</title>
       </Helmet>
-      {comments ? <Reviews comments={comments}/> : null}
-      {comments?.length === 0 ? <div>No comments yet</div> : null}
+      {comments?.length ? <Reviews comments={comments}/> : <div>No comments yet</div>}
     </div>
   );
 }

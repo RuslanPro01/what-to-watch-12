@@ -41,6 +41,7 @@ function Main(): JSX.Element {
                   <CardButtonList
                     filmId={String(promoFilm.id)}
                     isFavoriteFilm={promoFilm.isFavorite}
+                    isMainPage
                   />
                 )
               }
