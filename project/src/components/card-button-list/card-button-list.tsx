@@ -9,9 +9,10 @@ import {selectedAuthStatus} from '../../store/user-process/selectors';
 type CardButtonListProps = {
   filmId: string;
   isFavoriteFilm: boolean;
+  isMainPage: boolean;
 }
 
-export function CardButtonList({filmId, isFavoriteFilm}: CardButtonListProps): JSX.Element {
+export function CardButtonList({filmId, isFavoriteFilm, isMainPage}: CardButtonListProps): JSX.Element {
   const navigate = useNavigate();
   const authStatus = useAppSelector(selectedAuthStatus);
   return (
@@ -27,7 +28,7 @@ export function CardButtonList({filmId, isFavoriteFilm}: CardButtonListProps): J
         <span>Play</span>
       </button>
       <MyListButton isFavoriteFilm={isFavoriteFilm} filmId={filmId}/>
-      {authStatus === AuthorizationStatus.Auth ? <AddReviewButton/> : null}
+      {authStatus === AuthorizationStatus.Auth ? <AddReviewButton isMainPage={isMainPage}/> : null}
     </div>
   );
 }

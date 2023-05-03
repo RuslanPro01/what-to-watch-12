@@ -26,7 +26,7 @@ export function FilmCardHero({film}: FilmCardHeroProps): JSX.Element {
             <span className="film-card__genre">{film?.genre}</span>
             <span className="film-card__year">{film?.released}</span>
           </p>
-          <CardButtonList filmId={String(film.id)} isFavoriteFilm={film.isFavorite}/>
+          <CardButtonList filmId={String(film.id)} isFavoriteFilm={film.isFavorite} isMainPage={false}/>
         </div>
       </div>
     </>

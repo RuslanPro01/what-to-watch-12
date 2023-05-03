@@ -1,8 +1,13 @@
 import {Path} from '../../common-const';
 import {Link} from 'react-router-dom';
 
-export function AddReviewButton(): JSX.Element {
+type AddReviewButtonProps = {
+  isMainPage: boolean;
+}
+
+export function AddReviewButton({isMainPage}: AddReviewButtonProps) {
   return (
-    <Link to={Path.FilmsPages.Review} className="btn film-card__button">Add review</Link>
+    !isMainPage ? <Link to={Path.FilmsPages.Review} className="btn film-card__button">Add review</Link> : null
   );
 }
+
