@@ -1,2 +1,4 @@
-export const INITIAL_DISPLAYED_CARDS = 8;
-export const INCREMENTOR_DISPLAYED_CARDS = 8;
+export const Cards = {
+  DisplayedCards: 8,
+  IncrementorDisplayedCards: 8
+} as const;
